@@ -47,19 +47,22 @@ void main() {
 	// Subtract
 	printf("Subtract: ");
 	subtracted = subtract(matrixA, matrixB);
-	printMatrix(subtracted);
+	printMatrix(subtracted, 2);
+	freeMatrix(&subtracted);
 	printf("\n\n");
 
 	// Transposed
 	printf("Transpose: ");
-	printMatrix(matrixB);
+	printMatrix(matrixB, 2);
 	transposed = transpose(matrixB);
-	printMatrix(transposed);
+	printMatrix(transposed, 2);
+	freeMatrix(&transposed);
 	printf("\n\n");
 
 	// DotProduct
 	printf("Dot Product: ");
 	dotproducted = dotProduct(matrixA, matrixC);
-	printMatrix(dotproducted);
+	printMatrix(dotproducted, 2);
+	freeMatrix(&dotproducted);
 	printf("\n\n");
 }

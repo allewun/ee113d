@@ -10,6 +10,9 @@
 
 #include "matrix.h"
 
+#define DEFAULT_FLOAT_DECIMALS 6
+
+
 //=============================================================================
 // Helper functions
 //=============================================================================
@@ -44,10 +47,17 @@ Matrix array2Matrix(double* array, size_t arrayLen, size_t height, size_t width)
 	return matrix;
 }
 
-void printMatrix(Matrix m) {
+void printMatrix(Matrix m, int decimals) {
 	int i, j;
+	if (decimals == -1) {
+		decimals = DEFAULT_FLOAT_DECIMALS;
+	}
 
 	printf("\n");
+	if (m.width == 0 || m.height == 0) {
+		printf("[]");
+		return;
+	}
 	for (i = 0; i < m.height; i++) {
 		for (j = 0; j < m.width; j++) {
 			if (i == 0 && j == 0) {
@@ -56,7 +66,7 @@ void printMatrix(Matrix m) {
 			else if (j == 0) {
 				printf("  ");
 			}
-			printf("%f ", m.data[i][j]);
+			printf("%.*f ", decimals, m.data[i][j]);
 		}
 		if (i == m.height - 1) {
 			printf("]");
@@ -65,14 +75,14 @@ void printMatrix(Matrix m) {
 	}
 }
 
-void freeMatrix(Matrix m) {
+void freeMatrix(Matrix* m) {
 	int i;
-	for (i = 0; i < m.height; i++) {
-		free(m.data[i]);
+	for (i = 0; i < m->height; i++) {
+		free(m->data[i]);
 	}
-	free(m.data);
+	free(m->data);
 
-	m = (Matrix){0};
+	*m = (Matrix){0};
 }
 
 //=============================================================================
