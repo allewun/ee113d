@@ -65,6 +65,15 @@ void printMatrix(Matrix m) {
 	}
 }
 
+void freeMatrix(Matrix m) {
+	int i;
+	for (i = 0; i < m.height; i++) {
+		free(m.data[i]);
+	}
+	free(m.data);
+
+	m = (Matrix){0};
+}
 
 //=============================================================================
 // Matrix/vector functions

@@ -21,6 +21,7 @@ typedef struct {
 // Helper functions
 Matrix array2Matrix(double* array, size_t arrayLen, size_t height, size_t width);
 void printMatrix(Matrix m);
+void freeMatrix(Matrix m);
 
 // Matrix/vector functions
 double  norm(double x[], size_t length);
