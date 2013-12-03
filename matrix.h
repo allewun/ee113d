@@ -14,8 +14,8 @@
 
 // Matrix data type
 typedef struct {
-	size_t width, height;
-	double** data;
+    size_t width, height;
+    double** data;
 } Matrix;
 
 // Helper functions

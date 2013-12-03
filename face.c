@@ -18,51 +18,51 @@
 
 void main() {
 
-	double arrayA[2][5] = {{1.0, 2.0, 3.0, 4.0, 5.0},
-						   {1.0, 4.0, 3.5, 4.0, 5.0}};
+    double arrayA[2][5] = {{1.0, 2.0, 3.0, 4.0, 5.0},
+                           {1.0, 4.0, 3.5, 4.0, 5.0}};
 
-	double arrayB[2][5] = {{4.0, 2.0, 7.0, 1.0, 2.0},
-						   {1.6, 2.0, 3.0, 4.0, 5.6}};
+    double arrayB[2][5] = {{4.0, 2.0, 7.0, 1.0, 2.0},
+                           {1.6, 2.0, 3.0, 4.0, 5.6}};
 
-	double arrayC[5][2] = {{4.0, 1.6},
-						   {2.0, 2.0},
-						   {7.0, 3.0},
-						   {1.0, 4.0},
-						   {2.0, 5.6}};
+    double arrayC[5][2] = {{4.0, 1.6},
+                           {2.0, 2.0},
+                           {7.0, 3.0},
+                           {1.0, 4.0},
+                           {2.0, 5.6}};
 
-	Matrix matrixA = array2Matrix((double*)arrayA, 10, 2, 5);
-	Matrix matrixB = array2Matrix((double*)arrayB, 10, 2, 5);
-	Matrix matrixC = array2Matrix((double*)arrayC, 10, 5, 2);
+    Matrix matrixA = array2Matrix((double*)arrayA, 10, 2, 5);
+    Matrix matrixB = array2Matrix((double*)arrayB, 10, 2, 5);
+    Matrix matrixC = array2Matrix((double*)arrayC, 10, 5, 2);
 
-	Matrix subtracted;
-	Matrix dotproducted;
-	Matrix transposed;
+    Matrix subtracted;
+    Matrix dotproducted;
+    Matrix transposed;
 
-	int i, j, h, w;
+    int i, j, h, w;
 
 
-	// Norm
-	printf("Norm: %f\n\n", norm((double*)arrayA, 5));
+    // Norm
+    printf("Norm: %f\n\n", norm((double*)arrayA, 5));
 
-	// Subtract
-	printf("Subtract: ");
-	subtracted = subtract(matrixA, matrixB);
-	printMatrix(subtracted, 2);
-	freeMatrix(&subtracted);
-	printf("\n\n");
+    // Subtract
+    printf("Subtract: ");
+    subtracted = subtract(matrixA, matrixB);
+    printMatrix(subtracted, 2);
+    freeMatrix(&subtracted);
+    printf("\n\n");
 
-	// Transposed
-	printf("Transpose: ");
-	printMatrix(matrixB, 2);
-	transposed = transpose(matrixB);
-	printMatrix(transposed, 2);
-	freeMatrix(&transposed);
-	printf("\n\n");
+    // Transposed
+    printf("Transpose: ");
+    printMatrix(matrixB, 2);
+    transposed = transpose(matrixB);
+    printMatrix(transposed, 2);
+    freeMatrix(&transposed);
+    printf("\n\n");
 
-	// DotProduct
-	printf("Dot Product: ");
-	dotproducted = dotProduct(matrixA, matrixC);
-	printMatrix(dotproducted, 2);
-	freeMatrix(&dotproducted);
-	printf("\n\n");
+    // DotProduct
+    printf("Dot Product: ");
+    dotproducted = dotProduct(matrixA, matrixC);
+    printMatrix(dotproducted, 2);
+    freeMatrix(&dotproducted);
+    printf("\n\n");
 }
