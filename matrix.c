@@ -251,3 +251,36 @@ Matrix column(Matrix a, int n) {
 
     return matrix;
 }
+
+
+// Apply a function to each element of matrix a
+Matrix arrayFun(double (*function)(double), Matrix a) {
+    double** result;
+    Matrix matrix = {0};
+    int i, j;
+
+    // allocate memory
+    result = malloc(sizeof(double*) * a.height);
+    for (i = 0; i < a.height; i++) {
+        result[i] = malloc(sizeof(double) * a.width);
+    }
+
+    // apply function
+    for (i = 0; i < a.height; i++) {
+        for (j = 0; j < a.width; j++) {
+            result[i][j] = function(a.data[i][j]);
+        }
+    }
+
+    matrix.width = a.width;
+    matrix.height = a.height;
+    matrix.data = result;
+
+    return matrix;
+}
+
+
+
+double similarityScore(double n) {
+
+}

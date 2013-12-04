@@ -31,3 +31,5 @@ Matrix dotProduct(Matrix a, Matrix b);
 Matrix transpose(Matrix input);
 Matrix subtract(Matrix x, Matrix y);
 Matrix column(Matrix m, int n);
+
+Matrix arrayFun(double (*function)(double), Matrix m);

@@ -15,6 +15,9 @@
 #include "face.h"
 #include "matrix.h"
 
+double times2(double a) {
+    return a*2;
+}
 
 void main() {
 
@@ -51,6 +54,7 @@ void main() {
     Matrix dotproducted;
     Matrix transposed;
     Matrix columned;
+    Matrix applied;
 
     int i, j, h, w;
 
@@ -145,4 +149,9 @@ void main() {
     printMatrix(columned = column(matrixA, 0), 2);
     freeMatrix(&columned);
     printf("\n\n");
+
+    // Apply function
+    printf("Apply function:\n-------------------------------\n");
+    printf("apply(times2, A) =");
+    printMatrix(applied = arrayFun(times2, matrixA), 2);
 }
