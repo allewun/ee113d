@@ -50,6 +50,7 @@ void main() {
     Matrix subtracted;
     Matrix dotproducted;
     Matrix transposed;
+    Matrix columned;
 
     int i, j, h, w;
 
@@ -89,30 +90,24 @@ void main() {
 
     // Subtract
     printf("Subtract:\n-------------------------------\n");
-
     printf("A - B =");
-    subtracted = subtract(matrixA, matrixB);
-    printMatrix(subtracted, 2);
+    printMatrix(subtracted = subtract(matrixA, matrixB), 2);
     freeMatrix(&subtracted);
     printf("\n\n");
 
     // Transposed
     printf("Transpose:\n-------------------------------\n");
-
     printf("B =");
     printMatrix(matrixB, 2);
     printf("B' =");
-    transposed = transpose(matrixB);
-    printMatrix(transposed, 2);
+    printMatrix(transposed = transpose(matrixB), 2);
     freeMatrix(&transposed);
     printf("\n\n");
 
     // DotProduct
     printf("Dot Product:\n-------------------------------\n");
-
     printf("A * B =");
-    dotproducted = dotProduct(matrixA, matrixC);
-    printMatrix(dotproducted, 2);
+    printMatrix(dotproducted = dotProduct(matrixA, matrixC), 2);
     freeMatrix(&dotproducted);
     printf("\n\n");
 
@@ -124,5 +119,30 @@ void main() {
     printf("  max(D) = %f\n", max(matrixD));
     printf("  max(E) = %f\n", max(matrixE));
     printf("  max(F) = %f\n", max(matrixF));
+    printf("\n\n");
+
+    // Column
+    printf("Column:\n-------------------------------\n");
+    printf("column(A, 1) =");
+    printMatrix(columned = column(matrixA, 1), 2);
+
+    printf("column(A, 2) =");
+    printMatrix(columned = column(matrixA, 2), 2);
+
+    printf("column(A, 3) =");
+    printMatrix(columned = column(matrixA, 3), 2);
+
+    printf("column(A, 4) =");
+    printMatrix(columned = column(matrixA, 4), 2);
+
+    printf("column(A, 5) =");
+    printMatrix(columned = column(matrixA, 5), 2);
+
+    printf("column(A, 6) =");
+    printMatrix(columned = column(matrixA, 6), 2);
+
+    printf("column(A, 0) =");
+    printMatrix(columned = column(matrixA, 0), 2);
+    freeMatrix(&columned);
     printf("\n\n");
 }

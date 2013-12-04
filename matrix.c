@@ -223,3 +223,31 @@ double max(Matrix a) {
     return currentMax;
 }
 
+// Extract the nth column of a matrix (1-indexed)
+Matrix column(Matrix a, int n) {
+    double** result;
+    Matrix matrix = {0};
+    int i, h;
+
+    // verify dimensions
+    if (n > a.width || n < 1) {
+        return matrix;
+    }
+
+    // allocate memory
+    result = malloc(sizeof(double*) * a.height);
+    for (i = 0; i < a.height; i++) {
+        result[i] = malloc(sizeof(double));
+    }
+
+    // populate data
+    for (h = 0; h < a.height; h++) {
+        result[h][0] = a.data[h][n-1];
+    }
+
+    matrix.width = 1;
+    matrix.height = a.height;
+    matrix.data = result;
+
+    return matrix;
+}
