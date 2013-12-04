@@ -55,7 +55,7 @@ void printMatrix(Matrix m, int decimals) {
 
     printf("\n");
     if (m.width == 0 || m.height == 0) {
-        printf("[]");
+        printf("[]\n");
         return;
     }
     for (i = 0; i < m.height; i++) {
@@ -128,7 +128,7 @@ Matrix subtract(Matrix a, Matrix b) {
     }
 
     // allocate memory
-    result = malloc(sizeof(double*) * a.width);
+    result = malloc(sizeof(double*) * a.height);
     for (i = 0; i < a.height; i++) {
         result[i] = malloc(sizeof(double) * a.width);
     }
