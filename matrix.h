@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <float.h>
 
 // Matrix data type
 typedef struct {
@@ -24,8 +25,8 @@ void printMatrix(Matrix m, int decimals);
 void freeMatrix(Matrix* m);
 
 // Matrix/vector functions
-double  vectorNorm(Matrix a);
-Matrix  dotProduct(Matrix a, Matrix b);
-Matrix  transpose(Matrix input);
-Matrix  subtract(Matrix x, Matrix y);
-double* max(double x[]);
+double vectorNorm(Matrix a);
+double max(Matrix a);
+Matrix dotProduct(Matrix a, Matrix b);
+Matrix transpose(Matrix input);
+Matrix subtract(Matrix x, Matrix y);

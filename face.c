@@ -53,34 +53,76 @@ void main() {
 
     int i, j, h, w;
 
+    // Print matrices
+    printf("===============================\n");
+    printf("A =");
+    printMatrix(matrixA, 2);
+    printf("\n");
+
+    printf("B =");
+    printMatrix(matrixB, 2);
+    printf("\n");
+
+    printf("C =");
+    printMatrix(matrixC, 2);
+    printf("\n");
+
+    printf("D =");
+    printMatrix(matrixD, 2);
+    printf("\n");
+
+    printf("E =");
+    printMatrix(matrixE, 2);
+    printf("\n");
+
+    printf("F =");
+    printMatrix(matrixF, 2);
+    printf("===============================\n\n\n");
 
     // Norm
-    printf("Norm: ");
-    printf("\n%f\n", vectorNorm(matrixA));
-    printf("%f\n", vectorNorm(matrixD));
-    printf("%f\n", vectorNorm(matrixE));
-    printf("%f\n", vectorNorm(matrixF));
+    printf("Norm:\n-------------------------------\n");
+    printf("  norm(A) = %f\n", vectorNorm(matrixA));
+    printf("  norm(D) = %f\n", vectorNorm(matrixD));
+    printf("  norm(E) = %f\n", vectorNorm(matrixE));
+    printf("  norm(F) = %f\n", vectorNorm(matrixF));
     printf("\n\n");
 
     // Subtract
-    printf("Subtract: ");
+    printf("Subtract:\n-------------------------------\n");
+
+    printf("A - B =");
     subtracted = subtract(matrixA, matrixB);
     printMatrix(subtracted, 2);
     freeMatrix(&subtracted);
     printf("\n\n");
 
     // Transposed
-    printf("Transpose: ");
+    printf("Transpose:\n-------------------------------\n");
+
+    printf("B =");
     printMatrix(matrixB, 2);
+    printf("B' =");
     transposed = transpose(matrixB);
     printMatrix(transposed, 2);
     freeMatrix(&transposed);
     printf("\n\n");
 
     // DotProduct
-    printf("Dot Product: ");
+    printf("Dot Product:\n-------------------------------\n");
+
+    printf("A * B =");
     dotproducted = dotProduct(matrixA, matrixC);
     printMatrix(dotproducted, 2);
     freeMatrix(&dotproducted);
+    printf("\n\n");
+
+    // Max
+    printf("Max:\n-------------------------------\n");
+    printf("  max(A) = %f\n", max(matrixA));
+    printf("  max(B) = %f\n", max(matrixB));
+    printf("  max(C) = %f\n", max(matrixC));
+    printf("  max(D) = %f\n", max(matrixD));
+    printf("  max(E) = %f\n", max(matrixE));
+    printf("  max(F) = %f\n", max(matrixF));
     printf("\n\n");
 }

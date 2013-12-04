@@ -206,3 +206,20 @@ Matrix transpose(Matrix input) {
 
     return matrix;
 }
+
+// Find max element of matrix
+double max(Matrix a) {
+    double currentMax = -DBL_MAX;
+    int i, j;
+
+    for (i = 0; i < a.height; i++) {
+        for (j = 0; j < a.width; j++) {
+            if (a.data[i][j] > currentMax) {
+                currentMax = a.data[i][j];
+            }
+        }
+    }
+
+    return currentMax;
+}
+
