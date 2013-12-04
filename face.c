@@ -150,8 +150,8 @@ void main() {
     freeMatrix(&columned);
     printf("\n\n");
 
-    // Apply function
-    printf("Apply function:\n-------------------------------\n");
-    printf("apply(times2, A) =");
-    printMatrix(applied = arrayFun(times2, matrixA), 2);
+    // matrixEach()
+    printf("Matrix Each:\n-------------------------------\n");
+    printf("matrixEach(times2, A) =");
+    printMatrix(applied = matrixEach(times2, matrixA), 2);
 }

@@ -32,4 +32,4 @@ Matrix transpose(Matrix input);
 Matrix subtract(Matrix x, Matrix y);
 Matrix column(Matrix m, int n);
 
-Matrix arrayFun(double (*function)(double), Matrix m);
+Matrix matrixEach(double (*function)(), Matrix m);

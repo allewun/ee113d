@@ -254,7 +254,7 @@ Matrix column(Matrix a, int n) {
 
 
 // Apply a function to each element of matrix a
-Matrix arrayFun(double (*function)(double), Matrix a) {
+Matrix matrixEach(double (*function)(), Matrix a) {
     double** result;
     Matrix matrix = {0};
     int i, j;
@@ -281,6 +281,7 @@ Matrix arrayFun(double (*function)(double), Matrix a) {
 
 
 
-double similarityScore(double n) {
+double similarityScore(double n, Matrix a, Matrix b) {
+
 
 }
