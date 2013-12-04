@@ -30,9 +30,22 @@ void main() {
                            {1.0, 4.0},
                            {2.0, 5.6}};
 
+    double arrayD[1][5] = {{1.0, 2.0, 3.0, 4.0, 5.0}};
+
+    double arrayE[5][1] = {{1.0},
+                           {2.0},
+                           {3.0},
+                           {4.0},
+                           {5.0}};
+
+    double arrayF[5] = {1.0, 2.0, 3.0, 4.0, 5.0};
+
     Matrix matrixA = array2Matrix((double*)arrayA, 10, 2, 5);
     Matrix matrixB = array2Matrix((double*)arrayB, 10, 2, 5);
     Matrix matrixC = array2Matrix((double*)arrayC, 10, 5, 2);
+    Matrix matrixD = array2Matrix((double*)arrayD, 5, 5, 1);
+    Matrix matrixE = array2Matrix((double*)arrayE, 5, 1, 5);
+    Matrix matrixF = array2Matrix((double*)arrayF, 5, 1, 5);
 
     Matrix subtracted;
     Matrix dotproducted;
@@ -42,7 +55,12 @@ void main() {
 
 
     // Norm
-    printf("Norm: %f\n\n", norm((double*)arrayA, 5));
+    printf("Norm: ");
+    printf("\n%f\n", vectorNorm(matrixA));
+    printf("%f\n", vectorNorm(matrixD));
+    printf("%f\n", vectorNorm(matrixE));
+    printf("%f\n", vectorNorm(matrixF));
+    printf("\n\n");
 
     // Subtract
     printf("Subtract: ");

@@ -24,7 +24,7 @@ void printMatrix(Matrix m, int decimals);
 void freeMatrix(Matrix* m);
 
 // Matrix/vector functions
-double  norm(double x[], size_t length);
+double  vectorNorm(Matrix a);
 Matrix  dotProduct(Matrix a, Matrix b);
 Matrix  transpose(Matrix input);
 Matrix  subtract(Matrix x, Matrix y);

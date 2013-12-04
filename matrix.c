@@ -82,19 +82,35 @@ void freeMatrix(Matrix* m) {
     }
     free(m->data);
 
-    *m = (Matrix){0};
+    m->width = 0;
+    m->height = 0;
+    m->data = NULL;
 }
 
 //=============================================================================
 // Matrix/vector functions
 //=============================================================================
 
-double norm(double x[], size_t length) {
+// Calculate vector norm
+double vectorNorm(Matrix a) {
     double sum = 0;
-    int i;
+    int i, j;
 
-    for (i = 0; i < length; i++) {
-        sum += x[i]*x[i];
+    // calculate vector norm if matrix is a vector
+    if (a.width == 1) {
+        for (i = 0; i < a.height; i++) {
+            sum += a.data[i][0] * a.data[i][0];
+        }
+    }
+    else if (a.height == 1) {
+        for (i = 0; i < a.width; i++) {
+            sum += a.data[0][i] * a.data[0][i];
+        }
+    }
+    // if matrix isn't a vector, don't compute norm
+    // (matrix 2-norm is more complex and unneeded)
+    else {
+        return -1;
     }
 
     return sqrt(sum);
