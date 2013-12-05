@@ -28,7 +28,7 @@ Matrix array2Matrix(double* array, size_t arrayLen, size_t rows, size_t cols) {
     }
 
     // create matrix
-    result = newMatrix(rows, cols, 0);
+    result = newMatrix(rows, cols, false);
 
     // populate data
     for (h = 0; h < rows; h++) {
@@ -186,7 +186,7 @@ Matrix subtract(Matrix a, Matrix b) {
     }
 
     // create matrix
-    result = newMatrix(a.rows, a.cols, 0);
+    result = newMatrix(a.rows, a.cols, false);
 
     // subtract
     for (h = 0; h < a.rows; h++) {
@@ -209,7 +209,7 @@ Matrix dotProduct(Matrix a, Matrix b) {
     }
 
     // create matrix
-    result = newMatrix(a.rows, b.cols, 1);
+    result = newMatrix(a.rows, b.cols, true);
 
     // dot product
     for (h = 0; h < a.rows; h++) {
@@ -229,7 +229,7 @@ Matrix transpose(Matrix a) {
     int i, j;
 
     // create matrix
-    result = newMatrix(a.cols, a.rows, 0);
+    result = newMatrix(a.cols, a.rows, false);
 
     // swap a[r][c] with a[c][r]
     for (i = 0; i < a.rows; i++) {
@@ -252,7 +252,7 @@ Matrix column(Matrix a, int n) {
     }
 
     // create matrix
-    result = newMatrix(a.rows, 1, 0);
+    result = newMatrix(a.rows, 1, false);
 
     // populate data
     for (h = 0; h < a.rows; h++) {
