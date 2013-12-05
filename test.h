@@ -1,5 +1,5 @@
 //
-// face.h
+// test.c
 // Facial gender detection
 //
 //
@@ -8,15 +8,9 @@
 //  * Bryant Khau
 //
 
-#ifndef EE113D_FACE
-#define EE113D_FACE
+#include <assert.h>
 
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include "face.h"
 #include "matrix.h"
 
-
-
-#endif
+void testMatrix();

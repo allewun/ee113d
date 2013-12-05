@@ -9,7 +9,9 @@
 //
 
 #include "matrix.h"
+#include <float.h>
 
+typedef enum { false, true } bool;
 
 //=============================================================================
 // Helper functions
@@ -103,6 +105,11 @@ double** callocMatrix(size_t rows, size_t cols) {
     return result;
 }
 
+bool equals(double a, double b) {
+  return abs(a - b) <= DBL_EPSILON;
+}
+
+
 //=============================================================================
 // Matrix/vector functions
 //=============================================================================
@@ -130,6 +137,35 @@ double vectorNorm(Matrix a) {
     }
 
     return sqrt(sum);
+}
+
+// Find max element of matrix
+double max(Matrix a) {
+    double currentMax = -DBL_MAX;
+    int i, j;
+
+    for (i = 0; i < a.rows; i++) {
+        for (j = 0; j < a.cols; j++) {
+            if (a.data[i][j] > currentMax) {
+                currentMax = a.data[i][j];
+            }
+        }
+    }
+
+    return currentMax;
+}
+
+// Sum of all elements of matrix
+double sum(Matrix a) {
+    double result = 0;
+    int r, c;
+
+    for (r = 0; r < a.rows; r++) {
+        for (c = 0; c < a.cols; c++) {
+            result += a.data[r][c];
+        }
+    }
+    return result;
 }
 
 // Perform matrix subtraction
@@ -213,22 +249,6 @@ Matrix transpose(Matrix a) {
     return matrix;
 }
 
-// Find max element of matrix
-double max(Matrix a) {
-    double currentMax = -DBL_MAX;
-    int i, j;
-
-    for (i = 0; i < a.rows; i++) {
-        for (j = 0; j < a.cols; j++) {
-            if (a.data[i][j] > currentMax) {
-                currentMax = a.data[i][j];
-            }
-        }
-    }
-
-    return currentMax;
-}
-
 // Extract the nth column of a matrix (1-indexed)
 Matrix column(Matrix a, int n) {
     double** result;
@@ -249,30 +269,6 @@ Matrix column(Matrix a, int n) {
     }
 
     matrix.cols = 1;
-    matrix.rows = a.rows;
-    matrix.data = result;
-
-    return matrix;
-}
-
-
-// Apply a function to each element of matrix a
-Matrix matrixEach(double (*function)(), Matrix a) {
-    double** result;
-    Matrix matrix = {0};
-    int i, j;
-
-    // allocate memory
-    result = mallocMatrix(a.rows, a.cols);
-
-    // apply function
-    for (i = 0; i < a.rows; i++) {
-        for (j = 0; j < a.cols; j++) {
-            result[i][j] = function(a.data[i][j]);
-        }
-    }
-
-    matrix.cols = a.cols;
     matrix.rows = a.rows;
     matrix.data = result;
 

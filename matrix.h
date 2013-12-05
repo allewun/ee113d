@@ -8,6 +8,10 @@
 //  * Bryant Khau
 //
 
+#ifndef EE113D_MATRIX
+#define EE113D_MATRIX
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -31,9 +35,13 @@ double** callocMatrix(size_t rows, size_t cols);
 // Matrix/vector functions
 double vectorNorm(Matrix a);
 double max(Matrix a);
+double sum(Matrix a);
 Matrix dotProduct(Matrix a, Matrix b);
 Matrix transpose(Matrix input);
 Matrix subtract(Matrix x, Matrix y);
 Matrix column(Matrix m, int n);
 
-Matrix matrixEach(double (*function)(), Matrix m);
+Matrix matrixEach(Matrix n, double (*function)(), double (*extra)());
+
+
+#endif

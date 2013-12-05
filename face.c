@@ -9,15 +9,5 @@
 //
 
 #include "face.h"
+#include "matrix.h"
 
-double similarityScore(double n, Matrix a, Matrix b) {
-    // nth column of matrix A
-    Matrix left = column(a, n);
-    Matrix right = b;
-
-    return 1 / vectorNorm(subtract(left, right));
-}
-
-double times2(double a) {
-    return a*2;
-}
