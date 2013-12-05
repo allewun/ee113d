@@ -15,6 +15,8 @@
 
 
 void testMatrix() {
+    printf("Testing matrix functionality\n----------------------------\n\n");
+
     double arrayA[2][5] = {{1.0, 2.0, 3.0, 4.0, 5.0},
                            {1.0, 4.0, 3.5, 4.0, 5.0}};
 
@@ -49,9 +51,10 @@ void testMatrix() {
     printf("Done.\n");
 
     Matrix subtracted;
-    Matrix dotproducted;
+    Matrix dotProducted;
     Matrix transposed;
     Matrix columned;
+    Pair   max;
 
 
     // Test proper loading into Matrix data type
@@ -110,23 +113,32 @@ void testMatrix() {
 
     // DotProduct
     printf("Testing dotProduct()... ");
-    dotproducted = dotProduct(matrixA, matrixC);
-    assert(dotproducted.rows = matrixA.rows);
-    assert(dotproducted.cols = matrixC.cols);
-    assert(equals(dotproducted.data[0][0], 43.0));
-    assert(equals(dotproducted.data[0][1], 58.6));
-    assert(equals(dotproducted.data[1][0], 50.5));
-    assert(equals(dotproducted.data[1][1], 64.1));
+    dotProducted = dotProduct(matrixA, matrixC);
+    assert(dotProducted.rows = matrixA.rows);
+    assert(dotProducted.cols = matrixC.cols);
+    assert(equals(dotProducted.data[0][0], 43.0));
+    assert(equals(dotProducted.data[0][1], 58.6));
+    assert(equals(dotProducted.data[1][0], 50.5));
+    assert(equals(dotProducted.data[1][1], 64.1));
     printf("Done.\n");
 
-    // Max
-    printf("Testing max()... ");
-    assert(equals(max(matrixA), 5.0));
-    assert(equals(max(matrixB), 7.0));
-    assert(equals(max(matrixC), 7.0));
-    assert(equals(max(matrixD), 5.0));
-    assert(equals(max(matrixE), 60e3));
-    assert(equals(max(matrixF), 5.0));
+    // MaxWithIndex
+    printf("Testing maxWithIndex()... ");
+    max = maxWithIndex(matrixE);
+    assert(equals(max.value, 60e3));
+    assert(max.index == 5);
+
+    columned = column(matrixC, 1);
+    max = maxWithIndex(columned);
+    assert(equals(max.value, 7.0));
+    assert(max.index == 2);
+    freeMatrix(&columned);
+
+    columned = column(matrixC, 2);
+    max = maxWithIndex(columned);
+    assert(equals(max.value, 5.6));
+    assert(max.index == 4);
+    freeMatrix(&columned);
     printf("Done.\n");
 
     // Column
@@ -172,6 +184,10 @@ void testMatrix() {
 
     freeMatrix(&subtracted);
     freeMatrix(&transposed);
-    freeMatrix(&dotproducted);
+    freeMatrix(&dotProducted);
     freeMatrix(&columned);
+}
+
+void testFace() {
+
 }

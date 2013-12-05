@@ -17,4 +17,5 @@
 
 void main() {
     testMatrix();
+    testFace();
 }

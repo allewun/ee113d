@@ -139,20 +139,39 @@ double vectorNorm(Matrix a) {
     return sqrt(sum);
 }
 
-// Find max element of matrix
-double max(Matrix a) {
+// Find max element of vector
+Pair maxWithIndex(Matrix a) {
     double currentMax = -DBL_MAX;
-    int i, j;
+    int currentIndex = -1;
+    Pair result = {-1, -1};
 
-    for (i = 0; i < a.rows; i++) {
-        for (j = 0; j < a.cols; j++) {
-            if (a.data[i][j] > currentMax) {
-                currentMax = a.data[i][j];
+    int r, c, rMax, cMax;
+
+    if (a.rows == 1) {
+        rMax = 1;
+        cMax = a.cols;
+    }
+    else if (a.cols == 1) {
+        rMax = a.rows;
+        cMax = 1;
+    }
+    else {
+        return result;
+    }
+
+    for (r = 0; r < rMax; r++) {
+        for (c = 0; c < cMax; c++) {
+            if (a.data[r][c] > currentMax) {
+                currentMax = a.data[r][c];
+                currentIndex = r+c;
             }
         }
     }
 
-    return currentMax;
+    result.value = currentMax;
+    result.index = currentIndex;
+
+    return result;
 }
 
 // Sum of all elements of matrix
