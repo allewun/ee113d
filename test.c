@@ -14,6 +14,7 @@
 #include <float.h>
 #include "test.h"
 #include "matrix.h"
+#include "face.h"
 
 bool equals(double a, double b) {
   return abs(a - b) <= DBL_EPSILON;
@@ -53,7 +54,7 @@ void testMatrix() {
     Matrix matrixD = array2Matrix((double*)arrayD, 5, 1, 5);
     Matrix matrixE = array2Matrix((double*)arrayE, 6, 6, 1);
     Matrix matrixF = array2Matrix((double*)arrayF, 5, 1, 5);
-    printf("Passed.\n");
+    printf("Done.\n");
 
     Matrix subtracted;
     Matrix dotProducted;
@@ -192,11 +193,52 @@ void testMatrix() {
     freeMatrix(&transposed);
     freeMatrix(&dotProducted);
     freeMatrix(&columned);
-    printf("Passed.\n");
+    printf("Done.\n");
 
     printf("\n");
 }
 
 void testFace() {
+    printf("Testing face functionality\n----------------------------\n");
 
+    double arrayA[2][5] = {{2.0, 3.0, 6.0, 7.0, 10.0},
+                           {1.0, 4.0, 5.0, 8.0, 9.0}};
+
+    double arrayB[2][1] = {{3.0},
+                           {9.0}};
+
+    double precomputedSimilar[5] = {1.0 / (1.0 + sqrt(65.0)),
+                                    1.0 / (1.0 + sqrt(25.0)),
+                                    1.0 / (1.0 + sqrt(25.0)),
+                                    1.0 / (1.0 + sqrt(17.0)),
+                                    1.0 / (1.0 + sqrt(49.0))};
+
+    Matrix similar;
+
+
+    // Load into Matrix data type
+    printf("Convert arrays to Matrix... ");
+    Matrix matrixA = array2Matrix((double*)arrayA, 10, 2, 5);
+    Matrix matrixB = array2Matrix((double*)arrayB, 2, 2, 1);
+    printf("Done.\n");
+
+
+    // similarityScore()
+    printf("Testing similarityScore()... ");
+    similar = similarityScore(matrixA, matrixB, 5);
+    assert(similar.rows == 5);
+    assert(similar.cols == 1);
+    assert(equals(similar.data[0][0], precomputedSimilar[0]));
+    assert(equals(similar.data[1][0], precomputedSimilar[1]));
+    assert(equals(similar.data[2][0], precomputedSimilar[2]));
+    assert(equals(similar.data[3][0], precomputedSimilar[3]));
+    assert(equals(similar.data[4][0], precomputedSimilar[4]));
+    freeMatrix(&similar);
+    printf("Passed.\n");
+
+    // Free memory
+    printf("Freeing matrix memory... ");
+    freeMatrix(&matrixA);
+    freeMatrix(&matrixB);
+    printf("Done.\n");
 }
