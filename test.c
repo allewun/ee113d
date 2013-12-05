@@ -8,14 +8,19 @@
 //  * Bryant Khau
 //
 
-#include <assert.h>
-
-#include "face.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <float.h>
+#include "test.h"
 #include "matrix.h"
 
+bool equals(double a, double b) {
+  return abs(a - b) <= DBL_EPSILON;
+}
 
 void testMatrix() {
-    printf("Testing matrix functionality\n----------------------------\n\n");
+    printf("Testing matrix functionality\n----------------------------\n");
 
     double arrayA[2][5] = {{1.0, 2.0, 3.0, 4.0, 5.0},
                            {1.0, 4.0, 3.5, 4.0, 5.0}};
@@ -48,7 +53,7 @@ void testMatrix() {
     Matrix matrixD = array2Matrix((double*)arrayD, 5, 1, 5);
     Matrix matrixE = array2Matrix((double*)arrayE, 6, 6, 1);
     Matrix matrixF = array2Matrix((double*)arrayF, 5, 1, 5);
-    printf("Done.\n");
+    printf("Passed.\n");
 
     Matrix subtracted;
     Matrix dotProducted;
@@ -82,7 +87,7 @@ void testMatrix() {
     assert(matrixF.rows == 1);
     assert(matrixF.cols == 5);
     assert(matrixF.data[0][2] == arrayF[2]);
-    printf("Done.\n");
+    printf("Passed.\n");
 
 
     // Test norm
@@ -90,7 +95,7 @@ void testMatrix() {
     assert(equals(vectorNorm(matrixD), sqrt(55.0)));
     assert(equals(vectorNorm(matrixE), sqrt(9.1e9)));
     assert(equals(vectorNorm(matrixF), vectorNorm(matrixD)));
-    printf("Done.\n");
+    printf("Passed.\n");
 
 
     // Subtract
@@ -101,7 +106,7 @@ void testMatrix() {
     assert(equals(subtracted.data[0][0], -3.0));
     assert(equals(subtracted.data[1][4], -0.6));
     assert(equals(sum(subtracted), 0.3));
-    printf("Done.\n");
+    printf("Passed.\n");
 
     // Transposed
     printf("Testing transpose()... ");
@@ -109,7 +114,7 @@ void testMatrix() {
     assert(transposed.rows == matrixB.cols);
     assert(transposed.cols == matrixB.rows);
     assert(sum(matrixB) == sum(transposed));
-    printf("Done.\n");
+    printf("Passed.\n");
 
     // DotProduct
     printf("Testing dotProduct()... ");
@@ -120,7 +125,7 @@ void testMatrix() {
     assert(equals(dotProducted.data[0][1], 58.6));
     assert(equals(dotProducted.data[1][0], 50.5));
     assert(equals(dotProducted.data[1][1], 64.1));
-    printf("Done.\n");
+    printf("Passed.\n");
 
     // MaxWithIndex
     printf("Testing maxWithIndex()... ");
@@ -139,7 +144,7 @@ void testMatrix() {
     assert(equals(max.value, 5.6));
     assert(max.index == 4);
     freeMatrix(&columned);
-    printf("Done.\n");
+    printf("Passed.\n");
 
     // Column
     printf("Testing column()... ");
@@ -172,9 +177,10 @@ void testMatrix() {
     assert(columned.cols == 1);
     assert(equals(sum(columned), 210e3));
     freeMatrix(&columned);
-    printf("Done.\n");
+    printf("Passed.\n");
 
     // Free memory
+    printf("Freeing matrix memory... ");
     freeMatrix(&matrixA);
     freeMatrix(&matrixB);
     freeMatrix(&matrixC);
@@ -186,6 +192,9 @@ void testMatrix() {
     freeMatrix(&transposed);
     freeMatrix(&dotProducted);
     freeMatrix(&columned);
+    printf("Passed.\n");
+
+    printf("\n");
 }
 
 void testFace() {

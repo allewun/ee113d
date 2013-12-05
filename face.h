@@ -11,12 +11,10 @@
 #ifndef EE113D_FACE
 #define EE113D_FACE
 
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include "matrix.h"
 
+Matrix similarityScore(Matrix a, Matrix b, int n);
 
 
 #endif
+// EE113D_FACE

@@ -1,5 +1,5 @@
 //
-// test.h
+// ee113d.h
 // Facial gender detection
 //
 //
@@ -8,13 +8,15 @@
 //  * Bryant Khau
 //
 
-#ifndef EE113D_TEST
-#define EE113D_TEST
+#ifndef EE113D
+#define EE113D
 
-#include <assert.h>
 
-void testMatrix();
+typedef enum {
+    false,
+    true
+} bool;
 
 
 #endif
-// EE113D_TEST
+// EE113D

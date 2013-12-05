@@ -8,10 +8,10 @@
 //  * Bryant Khau
 //
 
-#include "matrix.h"
+#include <stdio.h>
+#include <math.h>
 #include <float.h>
-
-typedef enum { false, true } bool;
+#include "matrix.h"
 
 //=============================================================================
 // Helper functions
@@ -19,30 +19,25 @@ typedef enum { false, true } bool;
 
 // Convert a plain array to a Matrix struct
 Matrix array2Matrix(double* array, size_t arrayLen, size_t rows, size_t cols) {
-    double** result;
-    Matrix matrix = {0};
+    Matrix result = {0};
     int i, h, w;
 
     // verify dimensions
     if (arrayLen != cols * rows) {
-        return matrix;
+        return result;
     }
 
-    // allocate memory
-    result = mallocMatrix(rows, cols);
+    // create matrix
+    result = newMatrix(rows, cols, 0);
 
     // populate data
     for (h = 0; h < rows; h++) {
         for (w = 0; w < cols; w++) {
-            result[h][w] = array[h*cols + w];
+            result.data[h][w] = array[h*cols + w];
         }
     }
 
-    matrix.cols = cols;
-    matrix.rows = rows;
-    matrix.data = result;
-
-    return matrix;
+    return result;
 }
 
 // Print matrix to console
@@ -85,33 +80,21 @@ void freeMatrix(Matrix* m) {
 }
 
 // Allocate an rxc block of memory to be used for a matrix
-double** mallocMatrix(size_t rows, size_t cols) {
-    double** result;
+Matrix newMatrix(size_t rows, size_t cols, bool clearMemory) {
+    Matrix result = {0};
+    double** data;
     int i;
 
-    result = malloc(sizeof(double*) * rows);
+    data = clearMemory ? calloc(rows, sizeof(double*)) : malloc(sizeof(double*) * rows);
     for (i = 0; i < rows; i++) {
-        result[i] = malloc(sizeof(double) * cols);
+        data[i] = clearMemory ? calloc(cols, sizeof(double)) : malloc(sizeof(double) * cols);
     }
 
-    return result;
-}
-
-// Allocate an rxc block of memory to be used for a matrix and zero out the memory
-double** callocMatrix(size_t rows, size_t cols) {
-    double** result;
-    int i;
-
-    result = calloc(rows, sizeof(double*));
-    for (i = 0; i < rows; i++) {
-        result[i] = calloc(cols, sizeof(double));
-    }
+    result.data = data;
+    result.rows = rows;
+    result.cols = cols;
 
     return result;
-}
-
-bool equals(double a, double b) {
-  return abs(a - b) <= DBL_EPSILON;
 }
 
 
@@ -194,107 +177,87 @@ double sum(Matrix a) {
 
 // Perform matrix subtraction
 Matrix subtract(Matrix a, Matrix b) {
-    double** result;
-    Matrix matrix = {0};
+    Matrix result = {0};
     int i, h, w;
 
     // verify dimensions
     if (a.cols != b.cols || a.rows != b.rows) {
-        return matrix;
+        return result;
     }
 
-    // allocate memory
-    result = mallocMatrix(a.rows, a.cols);
+    // create matrix
+    result = newMatrix(a.rows, a.cols, 0);
 
     // subtract
     for (h = 0; h < a.rows; h++) {
         for (w = 0; w < a.cols; w++) {
-            result[h][w] = a.data[h][w] - b.data[h][w];
+            result.data[h][w] = a.data[h][w] - b.data[h][w];
         }
     }
 
-    matrix.cols = a.cols;
-    matrix.rows = a.rows;
-    matrix.data = result;
-
-    return matrix;
+    return result;
 }
 
 // Perform matrix dot product
 Matrix dotProduct(Matrix a, Matrix b) {
-    double** result;
-    Matrix matrix = {0};
+    Matrix result = {0};
     int i, h, w, yh;
 
     // verify dimensions
     if (a.cols != b.rows) {
-        return matrix;
+        return result;
     }
 
-    // allocate new matrix
-    result = callocMatrix(a.rows, a.cols);
+    // create matrix
+    result = newMatrix(a.rows, b.cols, 1);
 
     // dot product
     for (h = 0; h < a.rows; h++) {
         for (w = 0; w < b.cols; w++) {
             for (yh = 0; yh < b.rows; yh++) {
-                result[h][w] += a.data[h][yh] * b.data[yh][w];
+                result.data[h][w] += a.data[h][yh] * b.data[yh][w];
             }
         }
     }
 
-    matrix.cols = b.cols;
-    matrix.rows = a.rows;
-    matrix.data = result;
-
-    return matrix;
+    return result;
 }
 
 // Transpose matrix
 Matrix transpose(Matrix a) {
-    double** result;
-    Matrix matrix = {0};
+    Matrix result = {0};
     int i, j;
 
-    // allocate tranposed matrix
-    result = mallocMatrix(a.cols, a.rows);
+    // create matrix
+    result = newMatrix(a.cols, a.rows, 0);
 
     // swap a[r][c] with a[c][r]
     for (i = 0; i < a.rows; i++) {
         for (j = 0; j < a.cols; j++) {
-            result[j][i] = a.data[i][j];
+            result.data[j][i] = a.data[i][j];
         }
     }
 
-    matrix.cols = a.rows;
-    matrix.rows = a.cols;
-    matrix.data = result;
-
-    return matrix;
+    return result;
 }
 
 // Extract the nth column of a matrix (1-indexed)
 Matrix column(Matrix a, int n) {
-    double** result;
-    Matrix matrix = {0};
+    Matrix result = {0};
     int i, h;
 
     // verify dimensions
     if (n > a.cols || n < 1) {
-        return matrix;
+        return result;
     }
 
-    // allocate memory
-    result = mallocMatrix(a.rows, 1);
+    // create matrix
+    result = newMatrix(a.rows, 1, 0);
 
     // populate data
     for (h = 0; h < a.rows; h++) {
-        result[h][0] = a.data[h][n-1];
+        result.data[h][0] = a.data[h][n-1];
     }
 
-    matrix.cols = 1;
-    matrix.rows = a.rows;
-    matrix.data = result;
-
-    return matrix;
+    return result;
 }

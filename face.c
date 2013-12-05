@@ -9,5 +9,11 @@
 //
 
 #include "face.h"
-#include "matrix.h"
 
+Matrix similarityScore(Matrix features, Matrix featureVector, int n) {
+  int i;
+
+  for (i = 0; i < n; i++) {
+
+  }
+}

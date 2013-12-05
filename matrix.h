@@ -11,11 +11,8 @@
 #ifndef EE113D_MATRIX
 #define EE113D_MATRIX
 
-
-#include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include <float.h>
+#include "ee113d.h"
 
 #define PRINT_MATRIX_DECIMALS 2
 
@@ -32,11 +29,10 @@ typedef struct {
 } Pair;
 
 // Helper functions
-Matrix   array2Matrix(double* array, size_t arrayLen, size_t rows, size_t cols);
-void     printMatrix(Matrix m);
-void     freeMatrix(Matrix* m);
-double** mallocMatrix(size_t rows, size_t cols);
-double** callocMatrix(size_t rows, size_t cols);
+Matrix array2Matrix(double* array, size_t arrayLen, size_t rows, size_t cols);
+void   printMatrix(Matrix m);
+void   freeMatrix(Matrix* m);
+Matrix newMatrix(size_t rows, size_t cols, bool clearMemory);
 
 // Matrix/vector functions
 double vectorNorm(Matrix a);
@@ -51,3 +47,4 @@ Matrix matrixEach(Matrix n, double (*function)(), double (*extra)());
 
 
 #endif
+// EE113D_MATRIX
