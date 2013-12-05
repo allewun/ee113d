@@ -133,13 +133,13 @@ void testMatrix() {
     assert(equals(max.value, 60e3));
     assert(max.index == 5);
 
-    columned = column(matrixC, 1);
+    columned = column(matrixC, 0);
     max = maxWithIndex(columned);
     assert(equals(max.value, 7.0));
     assert(max.index == 2);
     freeMatrix(&columned);
 
-    columned = column(matrixC, 2);
+    columned = column(matrixC, 1);
     max = maxWithIndex(columned);
     assert(equals(max.value, 5.6));
     assert(max.index == 4);
@@ -148,31 +148,31 @@ void testMatrix() {
 
     // Column
     printf("Testing column()... ");
-    columned = column(matrixA, 1);
+    columned = column(matrixA, 0);
     assert(columned.rows == matrixA.rows);
     assert(columned.cols == 1);
     assert(equals(sum(columned), 2.0));
     freeMatrix(&columned);
 
-    columned = column(matrixA, 2);
+    columned = column(matrixA, 1);
     assert(columned.rows == matrixA.rows);
     assert(columned.cols == 1);
     assert(equals(sum(columned), 6.0));
     freeMatrix(&columned);
 
-    columned = column(matrixA, 3);
+    columned = column(matrixA, 2);
     assert(columned.rows == matrixA.rows);
     assert(columned.cols == 1);
     assert(equals(sum(columned), 6.5));
     freeMatrix(&columned);
 
-    columned = column(matrixC, 2);
+    columned = column(matrixC, 1);
     assert(columned.rows == matrixC.rows);
     assert(columned.cols == 1);
     assert(equals(sum(columned), 16.2));
     freeMatrix(&columned);
 
-    columned = column(matrixE, 1);
+    columned = column(matrixE, 0);
     assert(columned.rows == matrixE.rows);
     assert(columned.cols == 1);
     assert(equals(sum(columned), 210e3));

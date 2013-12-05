@@ -241,13 +241,13 @@ Matrix transpose(Matrix a) {
     return result;
 }
 
-// Extract the nth column of a matrix (1-indexed)
+// Extract the nth column of a matrix
 Matrix column(Matrix a, int n) {
     Matrix result = {0};
     int i, h;
 
     // verify dimensions
-    if (n > a.cols || n < 1) {
+    if (n > a.cols-1 || n < 0) {
         return result;
     }
 
@@ -256,7 +256,7 @@ Matrix column(Matrix a, int n) {
 
     // populate data
     for (h = 0; h < a.rows; h++) {
-        result.data[h][0] = a.data[h][n-1];
+        result.data[h][0] = a.data[h][n];
     }
 
     return result;
