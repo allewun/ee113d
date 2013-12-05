@@ -10,65 +10,57 @@
 
 #include "matrix.h"
 
-#define DEFAULT_FLOAT_DECIMALS 6
-
 
 //=============================================================================
 // Helper functions
 //=============================================================================
 
-Matrix array2Matrix(double* array, size_t arrayLen, size_t height, size_t width) {
+Matrix array2Matrix(double* array, size_t arrayLen, size_t rows, size_t cols) {
     double** result;
     Matrix matrix = {0};
     int i, h, w;
 
     // verify dimensions
-    if (arrayLen != width * height) {
+    if (arrayLen != cols * rows) {
         return matrix;
     }
 
     // allocate memory
-    result = malloc(sizeof(double*) * height);
-    for (i = 0; i < height; i++) {
-        result[i] = malloc(sizeof(double) * width);
-    }
+    result = mallocMatrix(rows, cols);
 
     // populate data
-    for (h = 0; h < height; h++) {
-        for (w = 0; w < width; w++) {
-            result[h][w] = array[h*width + w];
+    for (h = 0; h < rows; h++) {
+        for (w = 0; w < cols; w++) {
+            result[h][w] = array[h*cols + w];
         }
     }
 
-    matrix.width = width;
-    matrix.height = height;
+    matrix.cols = cols;
+    matrix.rows = rows;
     matrix.data = result;
 
     return matrix;
 }
 
-void printMatrix(Matrix m, int decimals) {
+void printMatrix(Matrix m) {
     int i, j;
-    if (decimals == -1) {
-        decimals = DEFAULT_FLOAT_DECIMALS;
-    }
 
     printf("\n");
-    if (m.width == 0 || m.height == 0) {
+    if (m.cols == 0 || m.rows == 0) {
         printf("[]\n");
         return;
     }
-    for (i = 0; i < m.height; i++) {
-        for (j = 0; j < m.width; j++) {
+    for (i = 0; i < m.rows; i++) {
+        for (j = 0; j < m.cols; j++) {
             if (i == 0 && j == 0) {
                 printf("[ ");
             }
             else if (j == 0) {
                 printf("  ");
             }
-            printf("%.*f ", decimals, m.data[i][j]);
+            printf("%.*f ", PRINT_MATRIX_DECIMALS, m.data[i][j]);
         }
-        if (i == m.height - 1) {
+        if (i == m.rows - 1) {
             printf("]");
         }
         printf("\n");
@@ -77,14 +69,38 @@ void printMatrix(Matrix m, int decimals) {
 
 void freeMatrix(Matrix* m) {
     int i;
-    for (i = 0; i < m->height; i++) {
+    for (i = 0; i < m->rows; i++) {
         free(m->data[i]);
     }
     free(m->data);
 
-    m->width = 0;
-    m->height = 0;
+    m->cols = 0;
+    m->rows = 0;
     m->data = NULL;
+}
+
+double** mallocMatrix(size_t rows, size_t cols) {
+    double** result;
+    int i;
+
+    result = malloc(sizeof(double*) * rows);
+    for (i = 0; i < rows; i++) {
+        result[i] = malloc(sizeof(double) * cols);
+    }
+
+    return result;
+}
+
+double** callocMatrix(size_t rows, size_t cols) {
+    double** result;
+    int i;
+
+    result = calloc(rows, sizeof(double*));
+    for (i = 0; i < rows; i++) {
+        result[i] = calloc(cols, sizeof(double));
+    }
+
+    return result;
 }
 
 //=============================================================================
@@ -97,13 +113,13 @@ double vectorNorm(Matrix a) {
     int i, j;
 
     // calculate vector norm if matrix is a vector
-    if (a.width == 1) {
-        for (i = 0; i < a.height; i++) {
+    if (a.cols == 1) {
+        for (i = 0; i < a.rows; i++) {
             sum += a.data[i][0] * a.data[i][0];
         }
     }
-    else if (a.height == 1) {
-        for (i = 0; i < a.width; i++) {
+    else if (a.rows == 1) {
+        for (i = 0; i < a.cols; i++) {
             sum += a.data[0][i] * a.data[0][i];
         }
     }
@@ -123,25 +139,22 @@ Matrix subtract(Matrix a, Matrix b) {
     int i, h, w;
 
     // verify dimensions
-    if (a.width != b.width || a.height != b.height) {
+    if (a.cols != b.cols || a.rows != b.rows) {
         return matrix;
     }
 
     // allocate memory
-    result = malloc(sizeof(double*) * a.height);
-    for (i = 0; i < a.height; i++) {
-        result[i] = malloc(sizeof(double) * a.width);
-    }
+    result = mallocMatrix(a.rows, a.cols);
 
     // subtract
-    for (h = 0; h < a.height; h++) {
-        for (w = 0; w < a.width; w++) {
+    for (h = 0; h < a.rows; h++) {
+        for (w = 0; w < a.cols; w++) {
             result[h][w] = a.data[h][w] - b.data[h][w];
         }
     }
 
-    matrix.width = a.width;
-    matrix.height = a.height;
+    matrix.cols = a.cols;
+    matrix.rows = a.rows;
     matrix.data = result;
 
     return matrix;
@@ -151,57 +164,50 @@ Matrix subtract(Matrix a, Matrix b) {
 Matrix dotProduct(Matrix a, Matrix b) {
     double** result;
     Matrix matrix = {0};
-
     int i, h, w, yh;
 
     // verify dimensions
-    if (a.width != b.height) {
+    if (a.cols != b.rows) {
         return matrix;
     }
 
     // allocate new matrix
-    result = calloc(a.height, sizeof(double*));
-    for (i = 0; i < a.height; i++) {
-        result[i] = calloc(b.width, sizeof(double));
-    }
+    result = callocMatrix(a.rows, a.cols);
 
     // dot product
-    for (h = 0; h < a.height; h++) {
-        for (w = 0; w < b.width; w++) {
-            for (yh = 0; yh < b.height; yh++) {
+    for (h = 0; h < a.rows; h++) {
+        for (w = 0; w < b.cols; w++) {
+            for (yh = 0; yh < b.rows; yh++) {
                 result[h][w] += a.data[h][yh] * b.data[yh][w];
             }
         }
     }
 
-    matrix.width = b.width;
-    matrix.height = a.height;
+    matrix.cols = b.cols;
+    matrix.rows = a.rows;
     matrix.data = result;
 
     return matrix;
 }
 
 // Transpose matrix
-Matrix transpose(Matrix input) {
+Matrix transpose(Matrix a) {
     double** result;
     Matrix matrix = {0};
     int i, j;
 
     // allocate tranposed matrix
-    result = malloc(sizeof(double*) * input.width);
-    for (i = 0; i < input.width; i++) {
-        result[i] = malloc(sizeof(double) * input.height);
-    }
+    result = mallocMatrix(a.cols, a.rows);
 
-    // swap m[r][c] with m[c][r]
-    for (i = 0; i < input.height; i++) {
-        for (j = 0; j < input.width; j++) {
-            result[j][i] = input.data[i][j];
+    // swap a[r][c] with a[c][r]
+    for (i = 0; i < a.rows; i++) {
+        for (j = 0; j < a.cols; j++) {
+            result[j][i] = a.data[i][j];
         }
     }
 
-    matrix.width = input.height;
-    matrix.height = input.width;
+    matrix.cols = a.rows;
+    matrix.rows = a.cols;
     matrix.data = result;
 
     return matrix;
@@ -212,8 +218,8 @@ double max(Matrix a) {
     double currentMax = -DBL_MAX;
     int i, j;
 
-    for (i = 0; i < a.height; i++) {
-        for (j = 0; j < a.width; j++) {
+    for (i = 0; i < a.rows; i++) {
+        for (j = 0; j < a.cols; j++) {
             if (a.data[i][j] > currentMax) {
                 currentMax = a.data[i][j];
             }
@@ -230,23 +236,20 @@ Matrix column(Matrix a, int n) {
     int i, h;
 
     // verify dimensions
-    if (n > a.width || n < 1) {
+    if (n > a.cols || n < 1) {
         return matrix;
     }
 
     // allocate memory
-    result = malloc(sizeof(double*) * a.height);
-    for (i = 0; i < a.height; i++) {
-        result[i] = malloc(sizeof(double));
-    }
+    result = mallocMatrix(a.rows, 1);
 
     // populate data
-    for (h = 0; h < a.height; h++) {
+    for (h = 0; h < a.rows; h++) {
         result[h][0] = a.data[h][n-1];
     }
 
-    matrix.width = 1;
-    matrix.height = a.height;
+    matrix.cols = 1;
+    matrix.rows = a.rows;
     matrix.data = result;
 
     return matrix;
@@ -260,28 +263,18 @@ Matrix matrixEach(double (*function)(), Matrix a) {
     int i, j;
 
     // allocate memory
-    result = malloc(sizeof(double*) * a.height);
-    for (i = 0; i < a.height; i++) {
-        result[i] = malloc(sizeof(double) * a.width);
-    }
+    result = mallocMatrix(a.rows, a.cols);
 
     // apply function
-    for (i = 0; i < a.height; i++) {
-        for (j = 0; j < a.width; j++) {
+    for (i = 0; i < a.rows; i++) {
+        for (j = 0; j < a.cols; j++) {
             result[i][j] = function(a.data[i][j]);
         }
     }
 
-    matrix.width = a.width;
-    matrix.height = a.height;
+    matrix.cols = a.cols;
+    matrix.rows = a.rows;
     matrix.data = result;
 
     return matrix;
-}
-
-
-
-double similarityScore(double n, Matrix a, Matrix b) {
-
-
 }

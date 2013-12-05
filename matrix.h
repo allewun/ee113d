@@ -13,16 +13,20 @@
 #include <math.h>
 #include <float.h>
 
+#define PRINT_MATRIX_DECIMALS 2
+
 // Matrix data type
 typedef struct {
-    size_t width, height;
+    size_t rows, cols;
     double** data;
 } Matrix;
 
 // Helper functions
-Matrix array2Matrix(double* array, size_t arrayLen, size_t height, size_t width);
-void printMatrix(Matrix m, int decimals);
-void freeMatrix(Matrix* m);
+Matrix   array2Matrix(double* array, size_t arrayLen, size_t rows, size_t cols);
+void     printMatrix(Matrix m);
+void     freeMatrix(Matrix* m);
+double** mallocMatrix(size_t rows, size_t cols);
+double** callocMatrix(size_t rows, size_t cols);
 
 // Matrix/vector functions
 double vectorNorm(Matrix a);

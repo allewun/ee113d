@@ -8,3 +8,10 @@
 //  * Bryant Khau
 //
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "matrix.h"
+
+double times2(double a);
+double similarityScore(double n, Matrix a, Matrix b);
