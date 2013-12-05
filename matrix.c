@@ -17,6 +17,7 @@ typedef enum { false, true } bool;
 // Helper functions
 //=============================================================================
 
+// Convert a plain array to a Matrix struct
 Matrix array2Matrix(double* array, size_t arrayLen, size_t rows, size_t cols) {
     double** result;
     Matrix matrix = {0};
@@ -44,6 +45,7 @@ Matrix array2Matrix(double* array, size_t arrayLen, size_t rows, size_t cols) {
     return matrix;
 }
 
+// Print matrix to console
 void printMatrix(Matrix m) {
     int i, j;
 
@@ -69,6 +71,7 @@ void printMatrix(Matrix m) {
     }
 }
 
+// Free memory allocated for matrix data
 void freeMatrix(Matrix* m) {
     int i;
     for (i = 0; i < m->rows; i++) {
@@ -81,6 +84,7 @@ void freeMatrix(Matrix* m) {
     m->data = NULL;
 }
 
+// Allocate an rxc block of memory to be used for a matrix
 double** mallocMatrix(size_t rows, size_t cols) {
     double** result;
     int i;
@@ -93,6 +97,7 @@ double** mallocMatrix(size_t rows, size_t cols) {
     return result;
 }
 
+// Allocate an rxc block of memory to be used for a matrix and zero out the memory
 double** callocMatrix(size_t rows, size_t cols) {
     double** result;
     int i;
