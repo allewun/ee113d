@@ -14,6 +14,7 @@
 #include <assert.h>
 
 void testMatrix();
+void testFace();
 
 
 #endif
