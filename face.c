@@ -15,6 +15,9 @@
 
 #define MEANFACE_FILE "mean_face.bmp"
 
+// 0-32 = male, 33-(NUM_IMAGES - 1) = female
+#define GENDER_CUTOFF_INDEX 33
+
 Matrix similarityScore(Matrix features, Matrix featureVector, int n) {
     Matrix result = newMatrix(n, 1, false);
     Matrix featuresCol = {0};
@@ -48,7 +51,10 @@ void genderDetection(char* file) {
            similarity_score,
            features;
     float* bmpData;
-    Pair maxIndex;
+    Pair maxIndex1, maxIndex2, maxIndex3;
+    float genderWeight1, genderWeight2, genderWeight3;
+
+    //char* raceTable = {};
 
     printf("Facial gender detection for %s \n----------------------------\n", file);
 
@@ -92,11 +98,30 @@ void genderDetection(char* file) {
     // similarity score
     features = array2Matrix((float*)featuresArray, NUM_EIGENFACES * NUM_IMAGES, NUM_EIGENFACES, NUM_IMAGES);
     similarity_score = similarityScore(features, featureVec, NUM_IMAGES);
-    printMatrix(similarity_score);
+    //printMatrix(similarity_score);
 
-    maxIndex = maxWithIndex(similarity_score);
-    printf("Max = %f, index = %i\n\n", maxIndex.value, maxIndex.index);
+    maxIndex1 = maxWithIndex(similarity_score);
+    similarity_score.data[maxIndex1.index][0] = 0;
+
+    maxIndex2 = maxWithIndex(similarity_score);
+    similarity_score.data[maxIndex2.index][0] = 0;
+
+    maxIndex3 = maxWithIndex(similarity_score);
+    similarity_score.data[maxIndex3.index][0] = 0;
 
     printf("Determining gender...\n");
+
+    genderWeight1 = ((maxIndex1.index >= GENDER_CUTOFF_INDEX) ? -1.0 : 1.0) * maxIndex1.value;
+    genderWeight2 = ((maxIndex1.index >= GENDER_CUTOFF_INDEX) ? -1.0 : 1.0) * maxIndex2.value;
+    genderWeight3 = ((maxIndex1.index >= GENDER_CUTOFF_INDEX) ? -1.0 : 1.0) * maxIndex3.value;
+
+    if (genderWeight1 + genderWeight2 + genderWeight3 >= 0) {
+        printf("[MALE] ");
+    }
+    else {
+        printf("[FEMALE] ");
+    }
+    printf(" -  %i, %i, %i", maxIndex1.index, maxIndex2.index, maxIndex3.index);
+
     printf("\n\n\n");
 }
