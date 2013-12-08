@@ -13,6 +13,12 @@
 #include "bmp.h"
 #include "ee113d-data.txt"
 
+#define IMAGE_WIDTH    180
+#define IMAGE_HEIGHT   200
+#define IMAGE_SIZE     (IMAGE_WIDTH * IMAGE_HEIGHT)
+#define IMAGE_COUNT    32
+#define NUM_EIGENFACES 20
+
 #define MEANFACE_FILE "mean_face.bmp"
 
 Matrix similarityScore(Matrix features, Matrix featureVector, int n) {
@@ -56,7 +62,7 @@ void genderDetection(char* file) {
     printf("Loading input image...\n");
     // load input_image
     bmpData = loadBitmapFileGrayscaleOutput(file, &bmpInfoHeader, false);
-    input_image = array2Matrix((float*)bmpData, 180*200, 200, 180);
+    input_image = array2Matrix((float*)bmpData, IMAGE_SIZE, IMAGE_HEIGHT, IMAGE_WIDTH);
     free(bmpData);
 
     printf("Transposing input image...\n");
@@ -66,17 +72,17 @@ void genderDetection(char* file) {
 
     printf("Reshaping input image...\n");
     // reshape input_image
-    transposed_reshaped_input_image = reshape(transposed_input_image, 36000, 1);
+    transposed_reshaped_input_image = reshape(transposed_input_image, IMAGE_SIZE, 1);
     freeMatrix(&transposed_input_image);
 
     printf("Calculating eigenfaces...\n");
     // load evectors
-    evectors = array2Matrix((float*)evecs, 36000*20, 20, 36000);
+    evectors = array2Matrix((float*)evecs, IMAGE_SIZE * NUM_EIGENFACES, NUM_EIGENFACES, IMAGE_SIZE);
 
     printf("Calculating mean face...\n");
     // load mean_face
     bmpData = loadBitmapFileGrayscaleOutput(MEANFACE_FILE, &bmpInfoHeader, true);
-    mean_face = array2Matrix((float*)bmpData, 180*200, 36000, 1);
+    mean_face = array2Matrix((float*)bmpData, IMAGE_SIZE, IMAGE_SIZE, 1);
     free(bmpData);
 
     printf("Calculating face differences...\n");
@@ -90,8 +96,8 @@ void genderDetection(char* file) {
 
     printf("Analyzing face matches...\n");
     // similarity score
-    features = array2Matrix((float*)featuresArray, 20*32, 20, 32);
-    similarity_score = similarityScore(features, featureVec, 32);
+    features = array2Matrix((float*)featuresArray, NUM_EIGENFACES * IMAGE_COUNT, NUM_EIGENFACES, IMAGE_COUNT);
+    similarity_score = similarityScore(features, featureVec, IMAGE_COUNT);
     printMatrix(similarity_score);
 
     maxIndex = maxWithIndex(similarity_score);
