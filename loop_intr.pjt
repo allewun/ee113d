@@ -34,7 +34,7 @@ Options=-g -fr"$(Proj_dir)\Debug" -i"c:\CCStudio_v3.1\C6000\dsk6416\include" -d"
 Options=-o3 -fr"$(Proj_dir)\Release" -mv6400
 
 ["Linker" Settings: "Debug"]
-Options=-c -heap0xc00000 -o".\Debug\loop_intr.out" -stack0x8000 -w -x -i"c:\CCStudio_v3.1\C6000\dsk6416\lib" -l"rts6400.lib" -l"dsk6416bsl.lib" -l"csl6416.lib"
+Options=-c -heap0xA00000 -o".\Debug\loop_intr.out" -stack0x8000 -w -x -i"c:\CCStudio_v3.1\C6000\dsk6416\lib" -l"rts6400.lib" -l"dsk6416bsl.lib" -l"csl6416.lib"
 
 ["Linker" Settings: "Release"]
 Options=-c -m".\Release\sine8_LED.map" -o".\Release\sine8_LED.out" -w -x
