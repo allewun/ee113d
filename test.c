@@ -21,8 +21,6 @@ bool equals(double a, double b) {
 }
 
 void testMatrix() {
-    printf("Testing matrix functionality\n----------------------------\n");
-
     double arrayA[2][5] = {{1.0, 2.0, 3.0, 4.0, 5.0},
                            {1.0, 4.0, 3.5, 4.0, 5.0}};
 
@@ -46,22 +44,30 @@ void testMatrix() {
 
     double arrayF[5] = {1.0, 2.0, 3.0, 4.0, 5.0};
 
-    // Load into Matrix data type
-    printf("Convert arrays to Matrix... ");
-    Matrix matrixA = array2Matrix((double*)arrayA, 10, 2, 5);
-    Matrix matrixB = array2Matrix((double*)arrayB, 10, 2, 5);
-    Matrix matrixC = array2Matrix((double*)arrayC, 10, 5, 2);
-    Matrix matrixD = array2Matrix((double*)arrayD, 5, 1, 5);
-    Matrix matrixE = array2Matrix((double*)arrayE, 6, 6, 1);
-    Matrix matrixF = array2Matrix((double*)arrayF, 5, 1, 5);
-    printf("Done.\n");
-
-    Matrix subtracted;
-    Matrix dotProducted;
-    Matrix transposed;
-    Matrix columned;
+    Matrix matrixA,
+           matrixB,
+           matrixC,
+           matrixD,
+           matrixE,
+           matrixF,
+           subtracted,
+           dotProducted,
+           transposed,
+           columned;
     Pair   max;
 
+
+    printf("Testing matrix functionality\n----------------------------\n");
+
+    // Load into Matrix data type
+    printf("Convert arrays to Matrix... ");
+    matrixA = array2Matrix((double*)arrayA, 10, 2, 5);
+    matrixB = array2Matrix((double*)arrayB, 10, 2, 5);
+    matrixC = array2Matrix((double*)arrayC, 10, 5, 2);
+    matrixD = array2Matrix((double*)arrayD, 5, 1, 5);
+    matrixE = array2Matrix((double*)arrayE, 6, 6, 1);
+    matrixF = array2Matrix((double*)arrayF, 5, 1, 5);
+    printf("Done.\n");
 
     // Test proper loading into Matrix data type
     printf("Testing proper loading... ");
@@ -199,8 +205,6 @@ void testMatrix() {
 }
 
 void testFace() {
-    printf("Testing face functionality\n----------------------------\n");
-
     double arrayA[2][5] = {{2.0, 3.0, 6.0, 7.0, 10.0},
                            {1.0, 4.0, 5.0, 8.0, 9.0}};
 
@@ -213,13 +217,17 @@ void testFace() {
                                     1.0 / (1.0 + sqrt(17.0)),
                                     1.0 / (1.0 + sqrt(49.0))};
 
-    Matrix similar;
+    Matrix matrixA,
+           matrixB,
+           similar;
 
+
+    printf("Testing face functionality\n----------------------------\n");
 
     // Load into Matrix data type
     printf("Convert arrays to Matrix... ");
-    Matrix matrixA = array2Matrix((double*)arrayA, 10, 2, 5);
-    Matrix matrixB = array2Matrix((double*)arrayB, 2, 2, 1);
+    matrixA = array2Matrix((double*)arrayA, 10, 2, 5);
+    matrixB = array2Matrix((double*)arrayB, 2, 2, 1);
     printf("Done.\n");
 
 
