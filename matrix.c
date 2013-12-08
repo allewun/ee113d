@@ -20,7 +20,7 @@
 //=============================================================================
 
 // Convert a plain array to a Matrix struct
-Matrix array2Matrix(double* array, size_t arrayLen, size_t rows, size_t cols) {
+Matrix array2Matrix(float* array, size_t arrayLen, size_t rows, size_t cols) {
     Matrix result = {0};
     int r, c;
 
@@ -84,10 +84,10 @@ void freeMatrix(Matrix* matrix) {
 // Allocate an rxc block of memory to be used for a matrix
 Matrix newMatrix(size_t rows, size_t cols, bool clearMemory) {
     Matrix result = {0};
-    double** data;
+    float** data;
     int i;
 
-    data = clearMemory ? calloc(rows, sizeof(double*)) : malloc(sizeof(double*) * rows);
+    data = clearMemory ? calloc(rows, sizeof(float*)) : malloc(sizeof(float*) * rows);
 
     if (data == NULL) {
         printf("New matrix memory allocation failure!\n");
@@ -95,7 +95,7 @@ Matrix newMatrix(size_t rows, size_t cols, bool clearMemory) {
     }
 
     for (i = 0; i < rows; i++) {
-        data[i] = clearMemory ? calloc(cols, sizeof(double)) : malloc(sizeof(double) * cols);
+        data[i] = clearMemory ? calloc(cols, sizeof(float)) : malloc(sizeof(float) * cols);
 
         if (data[i] == NULL) {
             printf("New row {%i} memory allocation failure!\n");
@@ -118,8 +118,8 @@ Matrix newMatrix(size_t rows, size_t cols, bool clearMemory) {
 //=============================================================================
 
 // Calculate vector norm
-double vectorNorm(Matrix a) {
-    double sum = 0.0;
+float vectorNorm(Matrix a) {
+    float sum = 0.0;
     int i;
 
     // calculate vector norm if matrix is a vector
@@ -144,7 +144,7 @@ double vectorNorm(Matrix a) {
 
 // Find max element of vector
 Pair maxWithIndex(Matrix matrix) {
-    double currentMax = -DBL_MAX;
+    float currentMax = -DBL_MAX;
     int currentIndex = -1;
     Pair result = {-1, -1};
 
@@ -178,8 +178,8 @@ Pair maxWithIndex(Matrix matrix) {
 }
 
 // Sum of all elements of matrix
-double sum(Matrix a) {
-    double result = 0.0;
+float sum(Matrix a) {
+    float result = 0.0;
     int r, c;
 
     for (r = 0; r < a.rows; r++) {

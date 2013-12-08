@@ -9,16 +9,12 @@
 #define GRAYSCALE_B 0.1140
 
 
-// use external RAM for DSK
-
-
-
-double* loadBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHeader) {
+float* loadBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHeader) {
     FILE *filePtr; // our file pointer
     BITMAPFILEHEADER bitmapFileHeader; //our bitmap file header
 
     unsigned char* bitmapImage;
-    double*        grayBitmapImage;
+    float*        grayBitmapImage;
 
 
     int i,invertedI, h,w, rowOffset, paddingBytes;
@@ -87,12 +83,12 @@ double* loadBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHead
     fclose(filePtr);
 
 
-    // unreverse row data, grayscale, and return array data as doubles
+    // unreverse row data, grayscale, and return array data as floats
     paddingBytes = (4 - (bitmapInfoHeader->biWidth*3 % 4)) % 4;
     rowOffset = 0;
 
 
-    grayBitmapImage = (double*)malloc(sizeof(double) * bitmapInfoHeader->biHeight * bitmapInfoHeader->biWidth);
+    grayBitmapImage = (float*)malloc(sizeof(float) * bitmapInfoHeader->biHeight * bitmapInfoHeader->biWidth);
 
 
     for (h = 0; h < bitmapInfoHeader->biHeight; h++) {
@@ -101,9 +97,9 @@ double* loadBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHead
         invertedI = bitmapInfoHeader->biWidth*(bitmapInfoHeader->biHeight-1-h) + w;
 
         // gbr -> rgb, grayscale, and normalize
-        grayBitmapImage[invertedI] = (GRAYSCALE_R * (double)(bitmapImage[i*3 + rowOffset + 2]) +
-                                      GRAYSCALE_G * (double)(bitmapImage[i*3 + rowOffset + 1]) +
-                                      GRAYSCALE_B * (double)(bitmapImage[i*3 + rowOffset + 0])) / 255.0;
+        grayBitmapImage[invertedI] = (GRAYSCALE_R * (float)(bitmapImage[i*3 + rowOffset + 2]) +
+                                      GRAYSCALE_G * (float)(bitmapImage[i*3 + rowOffset + 1]) +
+                                      GRAYSCALE_B * (float)(bitmapImage[i*3 + rowOffset + 0])) / 255.0;
         //printf("%f,", grayBitmapImage[invertedI]);
       }
       //printf("\n");
@@ -117,12 +113,12 @@ double* loadBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHead
     return grayBitmapImage;
 }
 
-double* loadGrayBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHeader) {
+float* loadGrayBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHeader) {
     FILE *filePtr; // our file pointer
     BITMAPFILEHEADER bitmapFileHeader; //our bitmap file header
 
     unsigned char* bitmapImage;
-    double*        grayBitmapImage;
+    float*        grayBitmapImage;
 
 
     int i,invertedI, h,w, rowOffset, paddingBytes;
@@ -191,12 +187,12 @@ double* loadGrayBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfo
     fclose(filePtr);
 
 
-    // unreverse row data, grayscale, and return array data as doubles
+    // unreverse row data, grayscale, and return array data as floats
     paddingBytes = (4 - (bitmapInfoHeader->biWidth % 4)) % 4;
     rowOffset = 0;
 
 
-    grayBitmapImage = (double*)malloc(sizeof(double) * bitmapInfoHeader->biHeight * bitmapInfoHeader->biWidth);
+    grayBitmapImage = (float*)malloc(sizeof(float) * bitmapInfoHeader->biHeight * bitmapInfoHeader->biWidth);
 
 
     for (h = 0; h < bitmapInfoHeader->biHeight; h++) {
@@ -205,7 +201,7 @@ double* loadGrayBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfo
         invertedI = bitmapInfoHeader->biWidth*(bitmapInfoHeader->biHeight-1-h) + w;
 
         // gbr -> rgb, grayscale, and normalize
-        grayBitmapImage[invertedI] = ((double)(bitmapImage[i + rowOffset])) / 255.0;
+        grayBitmapImage[invertedI] = ((float)(bitmapImage[i + rowOffset])) / 255.0;
       }
       rowOffset += paddingBytes;
     }

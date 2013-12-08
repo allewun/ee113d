@@ -18,33 +18,33 @@
 
 #define EE113D_DBL_EPSILON 1E-8 // DBL_EPSILON was too small
 
-bool equals(double a, double b) {
+int equals(float a, float b) {
     return fabs(a-b) <= EE113D_DBL_EPSILON;
 }
 
 void testMatrix() {
-    double arrayA[2][5] = {{1.0, 2.0, 3.0, 4.0, 5.0},
-                           {1.0, 4.0, 3.5, 4.0, 5.0}};
+    float arrayA[2][5] = {{1.0, 2.0, 3.0, 4.0, 5.0},
+                          {1.0, 4.0, 3.5, 4.0, 5.0}};
 
-    double arrayB[2][5] = {{4.0, 2.0, 7.0, 1.0, 2.0},
-                           {1.6, 2.0, 3.0, 4.0, 5.6}};
+    float arrayB[2][5] = {{4.0, 2.0, 7.0, 1.0, 2.0},
+                          {1.6, 2.0, 3.0, 4.0, 5.6}};
 
-    double arrayC[5][2] = {{4.0, 1.6},
-                           {2.0, 2.0},
-                           {7.0, 3.0},
-                           {1.0, 4.0},
-                           {2.0, 5.6}};
+    float arrayC[5][2] = {{4.0, 1.6},
+                          {2.0, 2.0},
+                          {7.0, 3.0},
+                          {1.0, 4.0},
+                          {2.0, 5.6}};
 
-    double arrayD[1][5] = {{1.0, 2.0, 3.0, 4.0, 5.0}};
+    float arrayD[1][5] = {{1.0, 2.0, 3.0, 4.0, 5.0}};
 
-    double arrayE[6][1] = {{10e3},
-                           {20e3},
-                           {30e3},
-                           {40e3},
-                           {50e3},
-                           {60e3}};
+    float arrayE[6][1] = {{10e3},
+                          {20e3},
+                          {30e3},
+                          {40e3},
+                          {50e3},
+                          {60e3}};
 
-    double arrayF[5] = {1.0, 2.0, 3.0, 4.0, 5.0};
+    float arrayF[5] = {1.0, 2.0, 3.0, 4.0, 5.0};
 
     Matrix matrixA,
            matrixB,
@@ -63,12 +63,12 @@ void testMatrix() {
 
     // Load into Matrix data type
     printf("Convert arrays to Matrix... ");
-    matrixA = array2Matrix((double*)arrayA, 10, 2, 5);
-    matrixB = array2Matrix((double*)arrayB, 10, 2, 5);
-    matrixC = array2Matrix((double*)arrayC, 10, 5, 2);
-    matrixD = array2Matrix((double*)arrayD, 5, 1, 5);
-    matrixE = array2Matrix((double*)arrayE, 6, 6, 1);
-    matrixF = array2Matrix((double*)arrayF, 5, 1, 5);
+    matrixA = array2Matrix((float*)arrayA, 10, 2, 5);
+    matrixB = array2Matrix((float*)arrayB, 10, 2, 5);
+    matrixC = array2Matrix((float*)arrayC, 10, 5, 2);
+    matrixD = array2Matrix((float*)arrayD, 5, 1, 5);
+    matrixE = array2Matrix((float*)arrayE, 6, 6, 1);
+    matrixF = array2Matrix((float*)arrayF, 5, 1, 5);
     printf("Done.\n");
 
     // Test proper loading into Matrix data type
@@ -207,17 +207,17 @@ void testMatrix() {
 }
 
 void testFace() {
-    double arrayA[2][5] = {{2.0, 3.0, 6.0, 7.0, 10.0},
-                           {1.0, 4.0, 5.0, 8.0, 9.0}};
+    float arrayA[2][5] = {{2.0, 3.0, 6.0, 7.0, 10.0},
+                          {1.0, 4.0, 5.0, 8.0, 9.0}};
 
-    double arrayB[2][1] = {{3.0},
-                           {9.0}};
+    float arrayB[2][1] = {{3.0},
+                          {9.0}};
 
-    double precomputedSimilar[5] = {1.0 / (1.0 + 8.062257748),
-                                    1.0 / (1.0 + 5.0),
-                                    1.0 / (1.0 + 5.0),
-                                    1.0 / (1.0 + 4.123105626),
-                                    1.0 / (1.0 + 7.0)};
+    float precomputedSimilar[5] = {1.0 / (1.0 + 8.062257748),
+                                   1.0 / (1.0 + 5.0),
+                                   1.0 / (1.0 + 5.0),
+                                   1.0 / (1.0 + 4.123105626),
+                                   1.0 / (1.0 + 7.0)};
 
     Matrix matrixA,
            matrixB,
@@ -228,8 +228,8 @@ void testFace() {
 
     // Load into Matrix data type
     printf("Convert arrays to Matrix... ");
-    matrixA = array2Matrix((double*)arrayA, 10, 2, 5);
-    matrixB = array2Matrix((double*)arrayB, 2, 2, 1);
+    matrixA = array2Matrix((float*)arrayA, 10, 2, 5);
+    matrixB = array2Matrix((float*)arrayB, 2, 2, 1);
     printf("Done.\n");
 
 

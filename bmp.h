@@ -27,5 +27,5 @@ typedef struct tagBITMAPINFOHEADER {
     DWORD biClrImportant; //number of colors that are important
 } BITMAPINFOHEADER;
 
-double* loadBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);
-double* loadGrayBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);
+float* loadBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);
+float* loadGrayBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);

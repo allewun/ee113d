@@ -17,25 +17,25 @@
 // Matrix data type
 typedef struct {
     size_t rows, cols;
-    double** data;
+    float** data;
 } Matrix;
 
 // Pair
 typedef struct {
-    double value;
+    float value;
     int index;
 } Pair;
 
 // Helper functions
-Matrix array2Matrix(double* array, size_t arrayLen, size_t rows, size_t cols);
+Matrix array2Matrix(float* array, size_t arrayLen, size_t rows, size_t cols);
 void   printMatrix(Matrix m);
 void   freeMatrix(Matrix* m);
 Matrix newMatrix(size_t rows, size_t cols, bool clearMemory);
 
 // Matrix/vector functions
-double vectorNorm(Matrix a);
+float  vectorNorm(Matrix a);
 Pair   maxWithIndex(Matrix a);
-double sum(Matrix a);
+float  sum(Matrix a);
 Matrix dotProduct(Matrix a, Matrix b);
 Matrix transpose(Matrix input);
 Matrix subtract(Matrix x, Matrix y);
