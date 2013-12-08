@@ -201,9 +201,7 @@ void testMatrix() {
     freeMatrix(&transposed);
     freeMatrix(&dotProducted);
     freeMatrix(&columned);
-    printf("Done.\n");
-
-    printf("\n");
+    printf("Done.\n\n");
 }
 
 void testFace() {
@@ -250,5 +248,5 @@ void testFace() {
     printf("Freeing matrix memory... ");
     freeMatrix(&matrixA);
     freeMatrix(&matrixB);
-    printf("Done.\n");
+    printf("Done.\n\n");
 }

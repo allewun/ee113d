@@ -8,6 +8,7 @@
 //  * Bryant Khau
 //
 
+#include <stdio.h>
 #include "face.h"
 #include "bmp.h"
 #include "ee113d-data.txt"
@@ -49,34 +50,45 @@ void genderDetection(char* file) {
     float* bmpData;
     Pair maxIndex;
 
+    printf("Facial gender detection for %s \n----------------------------\n", file);
+
+
+    printf("Loading input image...\n");
     // load input_image
     bmpData = loadBitmapFileGrayscaleOutput(file, &bmpInfoHeader, false);
     input_image = array2Matrix((float*)bmpData, 180*200, 200, 180);
     free(bmpData);
 
+    printf("Transposing input image...\n");
     // transpose input_image
     transposed_input_image = transpose(input_image);
     freeMatrix(&input_image);
 
+    printf("Reshaping input image...\n");
     // reshape input_image
     transposed_reshaped_input_image = reshape(transposed_input_image, 36000, 1);
     freeMatrix(&transposed_input_image);
 
+    printf("Calculating eigenfaces...\n");
     // load evectors
     evectors = array2Matrix((float*)evecs, 36000*20, 20, 36000);
 
+    printf("Calculating mean face...\n");
     // load mean_face
     bmpData = loadBitmapFileGrayscaleOutput(MEANFACE_FILE, &bmpInfoHeader, true);
     mean_face = array2Matrix((float*)bmpData, 180*200, 36000, 1);
     free(bmpData);
 
+    printf("Calculating face differences...\n");
     faceMinusMean = subtract(transposed_reshaped_input_image, mean_face);
     freeMatrix(&transposed_reshaped_input_image);
     freeMatrix(&mean_face);
 
+    printf("Projecting facial features onto eigenfaces...\n");
     featureVec = dotProduct(evectors, faceMinusMean);
     freeMatrix(&faceMinusMean);
 
+    printf("Analyzing face matches...\n");
     // similarity score
     features = array2Matrix((float*)featuresArray, 20*32, 20, 32);
     similarity_score = similarityScore(features, featureVec, 32);
@@ -84,4 +96,6 @@ void genderDetection(char* file) {
 
     maxIndex = maxWithIndex(similarity_score);
     printf("Max = %f, index = %i\n\n", maxIndex.value, maxIndex.index);
+
+    printf("Determining gender...\n");
 }
