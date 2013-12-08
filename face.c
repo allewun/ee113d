@@ -9,6 +9,7 @@
 //
 
 #include "face.h"
+#include "bmp.h"
 
 Matrix similarityScore(Matrix features, Matrix featureVector, int n) {
     Matrix result = newMatrix(n, 1, false);
@@ -27,4 +28,20 @@ Matrix similarityScore(Matrix features, Matrix featureVector, int n) {
     }
 
     return result;
+}
+
+unsigned char* LoadBitmap (unsigned char* filename)
+{
+    BITMAPINFOHEADER bitmapInfoHeader;
+    unsigned char *bitmapData;
+    int i;
+    bitmapData = LoadBitmapFile(filename, &bitmapInfoHeader);
+    printf("Image Size: %i x %i\n", bitmapInfoHeader.biHeight, bitmapInfoHeader.biWidth);
+
+    for (i=0;i<bitmapInfoHeader.biHeight * bitmapInfoHeader.biWidth;i++)
+    {
+        printf("[%i]", bitmapData[i]);
+    }
+
+    return bitmapData;
 }

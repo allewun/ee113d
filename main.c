@@ -13,4 +13,6 @@
 void main() {
     testMatrix();
     testFace();
+
+    LoadBitmap("abidi.bmp");
 }
