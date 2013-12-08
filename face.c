@@ -13,12 +13,6 @@
 #include "bmp.h"
 #include "ee113d-data.txt"
 
-#define IMAGE_WIDTH    180
-#define IMAGE_HEIGHT   200
-#define IMAGE_SIZE     (IMAGE_WIDTH * IMAGE_HEIGHT)
-#define IMAGE_COUNT    32
-#define NUM_EIGENFACES 20
-
 #define MEANFACE_FILE "mean_face.bmp"
 
 Matrix similarityScore(Matrix features, Matrix featureVector, int n) {
@@ -96,8 +90,8 @@ void genderDetection(char* file) {
 
     printf("Analyzing face matches...\n");
     // similarity score
-    features = array2Matrix((float*)featuresArray, NUM_EIGENFACES * IMAGE_COUNT, NUM_EIGENFACES, IMAGE_COUNT);
-    similarity_score = similarityScore(features, featureVec, IMAGE_COUNT);
+    features = array2Matrix((float*)featuresArray, NUM_EIGENFACES * NUM_IMAGES, NUM_EIGENFACES, NUM_IMAGES);
+    similarity_score = similarityScore(features, featureVec, NUM_IMAGES);
     printMatrix(similarity_score);
 
     maxIndex = maxWithIndex(similarity_score);
