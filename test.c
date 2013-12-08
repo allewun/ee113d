@@ -16,8 +16,10 @@
 #include "matrix.h"
 #include "face.h"
 
+#define EE113D_DBL_EPSILON 1E-8 // DBL_EPSILON was too small
+
 bool equals(double a, double b) {
-  return abs(a - b) <= DBL_EPSILON;
+    return fabs(a-b) <= EE113D_DBL_EPSILON;
 }
 
 void testMatrix() {
