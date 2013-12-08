@@ -11,6 +11,9 @@
 #ifndef EE113D
 #define EE113D
 
+#ifndef DSK
+#define DSK
+#endif
 
 typedef enum {
     false,

@@ -9,10 +9,12 @@
 //
 
 #include "test.h"
+#include "bmp.h"
 
 void main() {
     testMatrix();
     testFace();
 
-    LoadBitmap("abidi.bmp");
+    BITMAPINFOHEADER bmpInfoHeader;
+    loadBitmapFileGrayscale("abidi.bmp", &bmpInfoHeader);
 }
