@@ -98,4 +98,5 @@ void genderDetection(char* file) {
     printf("Max = %f, index = %i\n\n", maxIndex.value, maxIndex.index);
 
     printf("Determining gender...\n");
+    printf("\n\n\n");
 }

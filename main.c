@@ -13,8 +13,13 @@
 #include "face.h"
 
 void main() {
+    char* people[4] = {"briggs.bmp", "bryant.bmp", "allen.bmp", "cabric.bmp"};
+    int i;
+
     testMatrix();
     testFace();
 
-    genderDetection("abidi.bmp");
+    for (i = 0; i < 4; i++) {
+      genderDetection(people[i]);
+    }
 }
