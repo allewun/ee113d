@@ -28,3 +28,4 @@ typedef struct tagBITMAPINFOHEADER {
 } BITMAPINFOHEADER;
 
 double* loadBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);
+double* loadGrayBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);

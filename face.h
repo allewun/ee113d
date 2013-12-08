@@ -13,7 +13,10 @@
 
 #include "matrix.h"
 
+
 Matrix similarityScore(Matrix a, Matrix b, int n);
+void genderDetection(char* file);
+
 
 
 #endif

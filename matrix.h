@@ -14,8 +14,6 @@
 #include <stdlib.h>
 #include "ee113d.h"
 
-#define PRINT_MATRIX_DECIMALS 2
-
 // Matrix data type
 typedef struct {
     size_t rows, cols;
@@ -42,8 +40,7 @@ Matrix dotProduct(Matrix a, Matrix b);
 Matrix transpose(Matrix input);
 Matrix subtract(Matrix x, Matrix y);
 Matrix column(Matrix m, int n);
-
-Matrix matrixEach(Matrix n, double (*function)(), double (*extra)());
+Matrix reshape(Matrix m, int r, int c);
 
 
 #endif

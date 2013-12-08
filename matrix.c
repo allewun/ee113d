@@ -13,6 +13,8 @@
 #include <float.h>
 #include "matrix.h"
 
+#define PRINT_MATRIX_DECIMALS 19
+
 //=============================================================================
 // Helper functions
 //=============================================================================
@@ -57,7 +59,7 @@ void printMatrix(Matrix matrix) {
             else if (c == 0) {
                 printf("  ");
             }
-            printf("%.*f ", PRINT_MATRIX_DECIMALS, matrix.data[r][c]);
+            printf("%.*f, ", PRINT_MATRIX_DECIMALS, matrix.data[r][c]);
         }
         if (r == matrix.rows - 1) {
             printf("]");
@@ -86,13 +88,26 @@ Matrix newMatrix(size_t rows, size_t cols, bool clearMemory) {
     int i;
 
     data = clearMemory ? calloc(rows, sizeof(double*)) : malloc(sizeof(double*) * rows);
+
+    if (data == NULL) {
+        printf("New matrix memory allocation failure!\n");
+        return result;
+    }
+
     for (i = 0; i < rows; i++) {
         data[i] = clearMemory ? calloc(cols, sizeof(double)) : malloc(sizeof(double) * cols);
+
+        if (data[i] == NULL) {
+            printf("New row {%i} memory allocation failure!\n");
+            return result;
+        }
     }
 
     result.data = data;
     result.rows = rows;
     result.cols = cols;
+
+    //printf("NEW MATRIX [%i x %i]\n", rows, cols);
 
     return result;
 }
@@ -257,6 +272,30 @@ Matrix column(Matrix a, int n) {
     // populate data
     for (r = 0; r < a.rows; r++) {
         result.data[r][0] = a.data[r][n];
+    }
+
+    return result;
+}
+
+Matrix reshape(Matrix m, int r, int c) {
+    Matrix result = {0};
+    int x, y, i = 0;
+
+
+    if (r*c != m.rows*m.cols) {
+        printf("Reshape dimension mismatch!\n");
+        return result;
+    }
+
+    // create matrix
+    result = newMatrix(r, c, false);
+
+    // populate
+    for (y = 0; y < m.rows; y++) {
+        for (x = 0; x < m.cols; x++) {
+            i = y*m.cols + x;
+            result.data[i/c][i%c] = m.data[y][x];
+        }
     }
 
     return result;

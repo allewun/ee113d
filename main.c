@@ -10,12 +10,11 @@
 
 #include "test.h"
 #include "bmp.h"
+#include "face.h"
 
 void main() {
-    BITMAPINFOHEADER bmpInfoHeader;
-    testMatrix();
-    testFace();
+    //testMatrix();
+    //testFace();
 
-
-    loadBitmapFileGrayscale("abidi.bmp", &bmpInfoHeader);
+    genderDetection("abidi.bmp");
 }
