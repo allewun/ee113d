@@ -2,15 +2,41 @@
 #include <stdlib.h>
 #include "bmp.h"
 
+double* LoadBitmap (char* filename)
+{
+  BITMAPINFOHEADER bitmapInfoHeader;
+  double *bitmapData;
+  int h, w;
+  //setbuf(stdout,NULL);
+  bitmapData = LoadBitmapFile(filename, &bitmapInfoHeader);
 
-unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader)
+  printf("Image Size: %i x %i\n", bitmapInfoHeader.biHeight, bitmapInfoHeader.biWidth);
+
+  for (h=0;h<bitmapInfoHeader.biHeight;h++)
+  {
+    for(w=0;w<bitmapInfoHeader.biWidth;w++)
+    {
+      printf("[%f]", bitmapData[bitmapInfoHeader.biWidth*h+w]);
+    }
+    printf("\n");
+  }
+
+  return bitmapData;
+}
+unsigned char bitmapImage[108000];  //store image data
+double grayBitmapImage[36000];  //store image data
+#pragma DATA_SECTION(bitmapImage,".EXT_RAM")
+#pragma DATA_SECTION(grayBitmapImage,".EXT_RAM")
+
+double *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader)
 {
     FILE *filePtr; //our file pointer
     BITMAPFILEHEADER bitmapFileHeader; //our bitmap file header
-    unsigned char *bitmapImage;  //store image data
-    int imageIdx=0;  //image index counter
-    unsigned char tempRGB;  //our swap variable
-  int i;
+    //unsigned char *bitmapImage;  //store image data
+  //double *grayBitmapImage;  //store image data
+    //int imageIdx=0;  //image index counter
+    //unsigned char tempRGB;  //our swap variable
+  int i,invertedI,h,w, rowOffset, paddingBytes;
 
     //open filename in read binary mode
     filePtr = fopen(filename,"rb");
@@ -66,8 +92,9 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 
 
   printf("Attempting to allocate %i bytes of memory\n", bitmapInfoHeader->biSizeImage);
+
     //allocate enough memory for the bitmap image data
-    bitmapImage = (unsigned char*)malloc(bitmapInfoHeader->biSizeImage);
+    //bitmapImage = (unsigned char*)malloc(bitmapInfoHeader->biSizeImage);
 
     //verify memory allocation
     if (bitmapImage == NULL)
@@ -92,22 +119,44 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
     }
 
     //swap the r and b values to get RGB (bitmap is BGR)
+    /*
     for (imageIdx = 0;imageIdx < bitmapInfoHeader->biSizeImage;imageIdx+=3)
     {
         tempRGB = bitmapImage[imageIdx];
         bitmapImage[imageIdx] = bitmapImage[imageIdx + 2];
         bitmapImage[imageIdx + 2] = tempRGB;
     }
+    */
 
     //close file and return bitmap iamge data
     fclose(filePtr);
 
   printf("Printing Image\n");
-  for (i=0;i<bitmapInfoHeader->biHeight * bitmapInfoHeader->biWidth;i++)
+  for (i=0;i<bitmapInfoHeader->biHeight * bitmapInfoHeader->biWidth * 3;i++)
   {
     printf("%i,", bitmapImage[i]);
   }
+
   printf("\n---------------\n");
 
-    return bitmapImage;
+  paddingBytes = 4 - (bitmapInfoHeader->biWidth*3 % 4);
+  rowOffset = 0;
+  for (h=0;h<bitmapInfoHeader->biHeight;h++)
+  {
+    for(w=0;w<bitmapInfoHeader->biWidth;w++)
+    {
+      i = bitmapInfoHeader->biWidth*h+w;
+      invertedI = bitmapInfoHeader->biWidth*(bitmapInfoHeader->biHeight-1-h) + w;
+
+      grayBitmapImage[invertedI] = 0.1140 * (double)(bitmapImage[i*3+rowOffset]) + 0.5870 * (double)(bitmapImage[i*3+1+rowOffset]) + 0.2989* (double)(bitmapImage[i*3+2+rowOffset]);
+      grayBitmapImage[invertedI] = grayBitmapImage[invertedI]/255.0;
+    }
+    rowOffset += paddingBytes;
+  }
+
+
+
+  free(bitmapImage);
+
+    return grayBitmapImage;
 }
