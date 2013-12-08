@@ -213,11 +213,11 @@ void testFace() {
     double arrayB[2][1] = {{3.0},
                            {9.0}};
 
-    double precomputedSimilar[5] = {1.0 / (1.0 + sqrt(65.0)),
-                                    1.0 / (1.0 + sqrt(25.0)),
-                                    1.0 / (1.0 + sqrt(25.0)),
-                                    1.0 / (1.0 + sqrt(17.0)),
-                                    1.0 / (1.0 + sqrt(49.0))};
+    double precomputedSimilar[5] = {1.0 / (1.0 + 8.062257748),
+                                    1.0 / (1.0 + 5.0),
+                                    1.0 / (1.0 + 5.0),
+                                    1.0 / (1.0 + 4.123105626),
+                                    1.0 / (1.0 + 7.0)};
 
     Matrix matrixA,
            matrixB,

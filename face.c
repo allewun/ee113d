@@ -29,4 +29,3 @@ Matrix similarityScore(Matrix features, Matrix featureVector, int n) {
 
     return result;
 }
-
