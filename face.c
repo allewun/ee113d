@@ -62,11 +62,9 @@ void genderDetection(char* file) {
     bmpData = loadGrayBitmapFileGrayscale(MEANFACE_FILE, &bmpInfoHeader);
     mean_face = array2Matrix((double*)bmpData, 180*200, 36000, 1);
     free(bmpData);
-    //printMatrix(mean_face);
 
     // load evectors
     evectors = array2Matrix((double*)evecs, 36000*20, 20, 36000);
-    printMatrix(evectors);
 
     // transpose input_image
     transposed_input_image = transpose(input_image);
@@ -77,9 +75,7 @@ void genderDetection(char* file) {
     freeMatrix(&transposed_input_image);
 
     faceMinusMean = subtract(transposed_reshaped_input_image, mean_face);
-
     featureVec = dotProduct(evectors, faceMinusMean);
-    printMatrix(featureVec);
 
     // similarity score
     similarity_score = similarityScore(features, featureVec, 32);
@@ -87,5 +83,4 @@ void genderDetection(char* file) {
 
     maxIndex = maxWithIndex(similarity_score);
     printf("Max = %f, index = %i\n\n", maxIndex.value, maxIndex.index);
-
 }
