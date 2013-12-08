@@ -74,7 +74,7 @@ double* loadBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHead
 
 
     // read in the bitmap image data
-    fread(bitmapImage, 4, bitmapInfoHeader->biSizeImage, filePtr);
+    fread(bitmapImage, 1, bitmapInfoHeader->biSizeImage, filePtr);
 
     // make sure bitmap image data was read
     if (bitmapImage == NULL) {
@@ -178,7 +178,7 @@ double* loadGrayBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfo
 
 
     // read in the bitmap image data
-    fread(bitmapImage, 4, bitmapInfoHeader->biSizeImage, filePtr);
+    fread(bitmapImage, 1, bitmapInfoHeader->biSizeImage, filePtr);
 
     // make sure bitmap image data was read
     if (bitmapImage == NULL) {

@@ -13,7 +13,7 @@
 #include <float.h>
 #include "matrix.h"
 
-#define PRINT_MATRIX_DECIMALS 19
+#define PRINT_MATRIX_DECIMALS 4
 
 //=============================================================================
 // Helper functions

@@ -10,6 +10,7 @@
 
 #include "face.h"
 #include "bmp.h"
+#include "ee113d-data.txt"
 
 #define EVECS_FILE    "evec_transposed.bmp"
 #define MEANFACE_FILE "mean_face.bmp"
@@ -43,8 +44,13 @@ void genderDetection(char* file) {
            faceMinusMean,
            featureVec,
            transposed_input_image,
-           transposed_reshaped_input_image;
+           transposed_reshaped_input_image,
+           similarity_score,
+           features;
     double* bmpData;
+    Pair maxIndex;
+
+    features = array2Matrix((double*)featuresArray, 20*32, 20, 32);
 
     // load input_image
     bmpData = loadBitmapFileGrayscale(file, &bmpInfoHeader);
@@ -56,12 +62,10 @@ void genderDetection(char* file) {
     bmpData = loadGrayBitmapFileGrayscale(MEANFACE_FILE, &bmpInfoHeader);
     mean_face = array2Matrix((double*)bmpData, 180*200, 36000, 1);
     free(bmpData);
-    printMatrix(mean_face);
+    //printMatrix(mean_face);
 
     // load evectors
-    bmpData = loadGrayBitmapFileGrayscale(EVECS_FILE, &bmpInfoHeader);
-    evectors = array2Matrix((double*)bmpData, 36000*20, 20, 36000);
-    free(bmpData);
+    evectors = array2Matrix((double*)evecs, 36000*20, 20, 36000);
     printMatrix(evectors);
 
     // transpose input_image
@@ -75,6 +79,13 @@ void genderDetection(char* file) {
     faceMinusMean = subtract(transposed_reshaped_input_image, mean_face);
 
     featureVec = dotProduct(evectors, faceMinusMean);
-
     printMatrix(featureVec);
+
+    // similarity score
+    similarity_score = similarityScore(features, featureVec, 32);
+    printMatrix(similarity_score);
+
+    maxIndex = maxWithIndex(similarity_score);
+    printf("Max = %f, index = %i\n\n", maxIndex.value, maxIndex.index);
+
 }
