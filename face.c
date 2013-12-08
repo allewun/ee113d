@@ -50,7 +50,7 @@ void genderDetection(char* file) {
     Pair maxIndex;
 
     // load input_image
-    bmpData = loadBitmapFileGrayscale(file, &bmpInfoHeader);
+    bmpData = loadBitmapFileGrayscaleOutput(file, &bmpInfoHeader, false);
     input_image = array2Matrix((float*)bmpData, 180*200, 200, 180);
     free(bmpData);
 
@@ -66,7 +66,7 @@ void genderDetection(char* file) {
     evectors = array2Matrix((float*)evecs, 36000*20, 20, 36000);
 
     // load mean_face
-    bmpData = loadGrayBitmapFileGrayscale(MEANFACE_FILE, &bmpInfoHeader);
+    bmpData = loadBitmapFileGrayscaleOutput(MEANFACE_FILE, &bmpInfoHeader, true);
     mean_face = array2Matrix((float*)bmpData, 180*200, 36000, 1);
     free(bmpData);
 

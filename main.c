@@ -13,8 +13,8 @@
 #include "face.h"
 
 void main() {
-    //testMatrix();
-    //testFace();
+    testMatrix();
+    testFace();
 
     genderDetection("abidi.bmp");
 }

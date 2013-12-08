@@ -16,7 +16,7 @@
 #include "matrix.h"
 #include "face.h"
 
-#define EE113D_DBL_EPSILON 1E-8 // DBL_EPSILON was too small
+#define EE113D_DBL_EPSILON 1E-6 // DBL_EPSILON was too small
 
 int equals(float a, float b) {
     return fabs(a-b) <= EE113D_DBL_EPSILON;

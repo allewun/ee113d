@@ -1,4 +1,4 @@
-
+#include "ee113d.h"
 
 // bitmap stuff
 typedef unsigned short WORD;
@@ -27,5 +27,4 @@ typedef struct tagBITMAPINFOHEADER {
     DWORD biClrImportant; //number of colors that are important
 } BITMAPINFOHEADER;
 
-float* loadBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);
-float* loadGrayBitmapFileGrayscale(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);
+float* loadBitmapFileGrayscaleOutput(char *filename, BITMAPINFOHEADER *bitmapInfoHeader, bool grayScaleInput);
