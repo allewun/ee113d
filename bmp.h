@@ -1,3 +1,13 @@
+//
+// bmp.h - based on http://stackoverflow.com/a/14279511
+// Facial gender detection
+//
+//
+// EE 113D - Fall 2013
+//  * Allen Wu
+//  * Bryant Khau
+//
+
 #include "ee113d.h"
 
 // bitmap stuff

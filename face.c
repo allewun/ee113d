@@ -9,11 +9,12 @@
 //
 
 #include <stdio.h>
+#include <string.h>
 #include "face.h"
 #include "bmp.h"
-#include "ee113d-data.txt"
+#include "data/ee113d-data.txt"
 
-#define MEANFACE_FILE "mean_face.bmp"
+#define MEANFACE_FILE "data/mean_face.bmp"
 
 // 0-32 = male, 33-(NUM_IMAGES - 1) = female
 #define GENDER_CUTOFF_INDEX 33
@@ -39,6 +40,9 @@ Matrix similarityScore(Matrix features, Matrix featureVector, int n) {
 
 
 void genderDetection(char* file) {
+    static char const* const inputPath = "input/";
+    char* fullFile;
+
     BITMAPINFOHEADER bmpInfoHeader;
 
     Matrix input_image,
@@ -57,12 +61,18 @@ void genderDetection(char* file) {
     char* raceTable[] = {"French", "Iraqi", "Irish", "Isreali", "Mexican", "Mongolian", "Peruvian", "Polish", "Puerto Rican", "Uzbekistani", "African-American", "White American", "Chinese", "Romanian", "Russian", "Samoan", "Saudi Arabian", "Czech", "Hungarian", "Italian", "Serbian", "South African", "South Indian", "Spanish", "Korean", "Thai", "Brazilian", "Swiss", "Taiwanese", "Tibetan", "Ukrainian", "Vietnamese", "West African",
                          "Uzbekistani", "Welsh", "West African", "Vietnamese", "Chinese", "Hungarian", "Puerto Rican", "Thai", "African-American", "Afghan", "South African", "Cambodian", "English", "Ethiopian", "Filipino", "Finnish", "German", "Greek", "North Indian", "Iranian", "Irish", "Israeli", "Italian", "Mongolian", "Peruvian", "Polish", "Romanian", "South Indian", "Spanish", "Swedish", "Swiss", "Taiwanese", "Dutch", "Serbian", "Turkish", "Lebanese", "Brazilian"};
 
-    printf("Facial gender detection for %s \n--------------------------------------\n", file);
 
+
+    if((fullFile = (char *)malloc(strlen(inputPath) + strlen(file) + 1)) != NULL) {
+        strcpy(fullFile, inputPath);
+        strcat(fullFile, file);
+    }
+
+    printf("Facial gender detection for %s \n--------------------------------------\n", file);
 
     printf("Loading input image...\n");
     // load input_image
-    bmpData = loadBitmapFileGrayscaleOutput(file, &bmpInfoHeader, false);
+    bmpData = loadBitmapFileGrayscaleOutput(fullFile, &bmpInfoHeader, false);
     input_image = array2Matrix((float*)bmpData, IMAGE_SIZE, IMAGE_HEIGHT, IMAGE_WIDTH);
     free(bmpData);
 
