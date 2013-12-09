@@ -98,7 +98,7 @@ Matrix newMatrix(size_t rows, size_t cols, bool clearMemory) {
         data[i] = clearMemory ? calloc(cols, sizeof(float)) : malloc(sizeof(float) * cols);
 
         if (data[i] == NULL) {
-            printf("New row {%i} memory allocation failure!\n");
+            printf("New row {%i} memory allocation failure!\n", i);
             return result;
         }
     }
