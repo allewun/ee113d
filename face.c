@@ -123,11 +123,11 @@ void genderDetection(char* file) {
     else {
         printf("[FEMALE]");
     }
-    printf(" : %.3f %s (%s), %.3f %s (%s), %.3f %s (%s)", maxIndex1.value, ((maxIndex1.index >= GENDER_CUTOFF_INDEX) ? "Male" : "Female"),
+    printf(" : %.3f %s (%s), %.3f %s (%s), %.3f %s (%s)", maxIndex1.value, ((maxIndex1.index >= GENDER_CUTOFF_INDEX) ? "Female" : "Male"),
                                                           raceTable[maxIndex1.index],
-                                                          maxIndex2.value, ((maxIndex2.index >= GENDER_CUTOFF_INDEX) ? "Male" : "Female"),
+                                                          maxIndex2.value, ((maxIndex2.index >= GENDER_CUTOFF_INDEX) ? "Female" : "Male"),
                                                           raceTable[maxIndex2.index],
-                                                          maxIndex3.value, ((maxIndex3.index >= GENDER_CUTOFF_INDEX) ? "Male" : "Female"),
+                                                          maxIndex3.value, ((maxIndex3.index >= GENDER_CUTOFF_INDEX) ? "Female" : "Male"),
                                                           raceTable[maxIndex3.index]);
 
     printf("\n\n\n");
